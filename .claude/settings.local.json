@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git -C aulas-desenvolvimento-de-microservicos log --oneline -10)",
+      "Bash(git -C aulas-desenvolvimento-de-microservicos status --short)",
+      "Bash(rm -rf src/modules/academic/teachers src/modules/academic/subjects src/modules/auth src/modules/users src/modules/class-offering src/modules/enrollment src/modules/attendance src/shared/infra/decorators src/shared/domain)",
+      "Bash(rm -f src/shared/infra/database/drizzle/0000_mushy_reptil.sql src/shared/infra/database/drizzle/0001_seed_data.sql src/shared/infra/database/drizzle/meta/_journal.json src/shared/infra/database/drizzle/meta/0000_snapshot.json)",
+      "Bash(npm install *)",
+      "Bash(npm run *)",
+      "Bash(docker compose *)",
+      "Bash(docker rm *)",
+      "Bash(docker exec *)"
+    ]
+  }
+}

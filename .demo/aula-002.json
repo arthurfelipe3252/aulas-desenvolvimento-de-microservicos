@@ -1,0 +1,804 @@
+{
+  "$schema": "https://demotime.show/demo-time.schema.json",
+  "title": "Aula 002 - Autenticação e Autorização",
+  "demos": [
+    {
+      "id": "scene-aula002-0001",
+      "title": "Abrir terminal",
+      "steps": [
+        {
+          "action": "openTerminal",
+          "terminalId": "aula"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0002",
+      "title": "Instalação das dependências",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "npm install @nestjs/jwt bcryptjs && npm install --save-dev @types/bcryptjs"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0003",
+      "title": "Atualizar .env",
+      "steps": [
+        {
+          "action": "open",
+          "path": ".env"
+        },
+        {
+          "action": "replace",
+          "path": ".env",
+          "content": "DATABASE_URL=postgres://postgres:postgres@localhost:5432/custom\nPORT=3000\nJWT_SECRET=super-secret-jwt-key",
+          "position": "1:10",
+          "highlightWholeLine": true
+        },
+        {
+          "action": "save"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0004",
+      "title": "Atualizar tsconfig.json",
+      "steps": [
+        {
+          "action": "open",
+          "path": "tsconfig.json"
+        },
+        {
+          "action": "replace",
+          "path": "tsconfig.json",
+          "content": "{\n  \"compilerOptions\": {\n    \"module\": \"nodenext\",\n    \"moduleResolution\": \"nodenext\",\n    \"resolvePackageJsonExports\": true,\n    \"esModuleInterop\": true,\n    \"isolatedModules\": true,\n    \"declaration\": true,\n    \"removeComments\": true,\n    \"emitDecoratorMetadata\": true,\n    \"experimentalDecorators\": true,\n    \"allowSyntheticDefaultImports\": true,\n    \"target\": \"ES2023\",\n    \"sourceMap\": true,\n    \"outDir\": \"./dist\",\n    \"baseUrl\": \"./\",\n    \"incremental\": true,\n    \"skipLibCheck\": true,\n    \"strictNullChecks\": true,\n    \"forceConsistentCasingInFileNames\": true,\n    \"noImplicitAny\": true,\n    \"strictBindCallApply\": true,\n    \"noFallthroughCasesInSwitch\": true,\n    \"paths\": {\n      \"@shared/*\": [\"src/shared/*\"],\n      \"@academic/*\": [\"src/modules/academic/*\"],\n      \"@class-offering/*\": [\"src/modules/class-offering/*\"],\n      \"@enrollment/*\": [\"src/modules/enrollment/*\"],\n      \"@attendance/*\": [\"src/modules/attendance/*\"],\n      \"@users/*\": [\"src/modules/users/*\"],\n      \"@auth/*\": [\"src/modules/auth/*\"]\n    }\n  }\n}\n",
+          "position": "1:35",
+          "highlightWholeLine": true
+        },
+        {
+          "action": "save"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0005",
+      "title": "Criar permission.enum.ts",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "nest g class shared/domain/enums/permission.enum --flat --no-spec"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0006",
+      "title": "Editar permission.enum.ts",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/shared/domain/enums/permission.enum.ts"
+        },
+        {
+          "action": "replace",
+          "path": "src/shared/domain/enums/permission.enum.ts",
+          "content": "export enum Permission {\n  STUDENTS_READ = \"students:read\",\n  STUDENTS_WRITE = \"students:write\",\n  STUDENTS_DELETE = \"students:delete\",\n\n  TEACHERS_READ = \"teachers:read\",\n  TEACHERS_WRITE = \"teachers:write\",\n  TEACHERS_DELETE = \"teachers:delete\",\n\n  SUBJECTS_READ = \"subjects:read\",\n  SUBJECTS_WRITE = \"subjects:write\",\n  SUBJECTS_DELETE = \"subjects:delete\",\n\n  CLASS_OFFERINGS_READ = \"class-offerings:read\",\n  CLASS_OFFERINGS_WRITE = \"class-offerings:write\",\n  CLASS_OFFERINGS_DELETE = \"class-offerings:delete\",\n\n  ENROLLMENTS_READ = \"enrollments:read\",\n  ENROLLMENTS_WRITE = \"enrollments:write\",\n  ENROLLMENTS_DELETE = \"enrollments:delete\",\n\n  ATTENDANCES_READ = \"attendances:read\",\n  ATTENDANCES_WRITE = \"attendances:write\",\n  ATTENDANCES_DELETE = \"attendances:delete\",\n\n  USERS_READ = \"users:read\",\n  USERS_WRITE = \"users:write\",\n  USERS_DELETE = \"users:delete\",\n}\n",
+          "position": "1:30",
+          "highlightWholeLine": true
+        },
+        {
+          "action": "save"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0007",
+      "title": "Criar public.decorator.ts",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "nest g class shared/infra/decorators/public.decorator --flat --no-spec"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0008",
+      "title": "Editar public.decorator.ts",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/shared/infra/decorators/public.decorator.ts"
+        },
+        {
+          "action": "replace",
+          "path": "src/shared/infra/decorators/public.decorator.ts",
+          "content": "import { SetMetadata } from \"@nestjs/common\";\n\nexport const IS_PUBLIC_KEY = \"isPublic\";\nexport const Public = () => SetMetadata(IS_PUBLIC_KEY, true);\n",
+          "position": "1:10",
+          "highlightWholeLine": true
+        },
+        {
+          "action": "save"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0009",
+      "title": "Criar permissions.decorator.ts",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "nest g class shared/infra/decorators/permissions.decorator --flat --no-spec"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0010",
+      "title": "Editar permissions.decorator.ts",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/shared/infra/decorators/permissions.decorator.ts"
+        },
+        {
+          "action": "replace",
+          "path": "src/shared/infra/decorators/permissions.decorator.ts",
+          "content": "import { SetMetadata } from \"@nestjs/common\";\nimport type { Permission } from \"@shared/domain/enums/permission.enum\";\n\nexport const PERMISSIONS_KEY = \"permissions\";\nexport const RequirePermissions = (...permissions: Permission[]) =>\n  SetMetadata(PERMISSIONS_KEY, permissions);\n",
+          "position": "1:10",
+          "highlightWholeLine": true
+        },
+        {
+          "action": "save"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0011",
+      "title": "Criar current-user.decorator.ts",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "nest g class shared/infra/decorators/current-user.decorator --flat --no-spec"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0012",
+      "title": "Editar current-user.decorator.ts",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/shared/infra/decorators/current-user.decorator.ts"
+        },
+        {
+          "action": "replace",
+          "path": "src/shared/infra/decorators/current-user.decorator.ts",
+          "content": "import { createParamDecorator, type ExecutionContext } from \"@nestjs/common\";\n\nexport interface AuthenticatedUser {\n  sub: string;\n  email: string;\n  permissions: string[];\n}\n\nexport const CurrentUser = createParamDecorator(\n  (_data: unknown, ctx: ExecutionContext): AuthenticatedUser => {\n    const request = ctx\n      .switchToHttp()\n      .getRequest<{ user: AuthenticatedUser }>();\n    return request.user;\n  },\n);\n",
+          "position": "1:20",
+          "highlightWholeLine": true
+        },
+        {
+          "action": "save"
+        }
+      ]
+    },
+    {
+      "id": "scene-aula002-0013",
+      "title": "Módulo Users — estrutura de pastas",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "nest g module modules/users"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0014",
+      "title": "Criar user.entity",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "nest g class modules/users/domain/models/user.entity --flat --no-spec"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0015",
+      "title": "Editar user.entity.ts",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/modules/users/domain/models/user.entity.ts"
+        },
+        {
+          "action": "replace",
+          "path": "src/modules/users/domain/models/user.entity.ts",
+          "content": "export class User {\n  private readonly _id?: string;\n  private _email: string;\n  private _password: string;\n  private _teacherId?: string;\n  private _permissions: string[];\n  private readonly _createdAt?: Date;\n  private readonly _updatedAt?: Date;\n\n  private constructor(id?: string, createdAt?: Date, updatedAt?: Date) {\n    this._id = id;\n    this._createdAt = createdAt;\n    this._updatedAt = updatedAt;\n  }\n\n  get id(): string | undefined {\n    return this._id;\n  }\n\n  get email(): string {\n    return this._email;\n  }\n\n  get password(): string {\n    return this._password;\n  }\n\n  get teacherId(): string | undefined {\n    return this._teacherId;\n  }\n\n  get permissions(): string[] {\n    return this._permissions;\n  }\n\n  get createdAt(): Date | undefined {\n    return this._createdAt;\n  }\n\n  get updatedAt(): Date | undefined {\n    return this._updatedAt;\n  }\n\n  withEmail(email: string) {\n    this._email = email;\n    return this;\n  }\n\n  withPassword(password: string) {\n    this._password = password;\n    return this;\n  }\n\n  withTeacherId(teacherId: string | undefined) {\n    this._teacherId = teacherId;\n    return this;\n  }\n\n  withPermissions(permissions: string[]) {\n    this._permissions = permissions;\n    return this;\n  }\n\n  static restore(props?: {\n    id?: string;\n    email: string;\n    password: string;\n    teacherId?: string | null;\n    permissions: string[];\n    createdAt?: Date;\n    updatedAt?: Date;\n  }): User | null {\n    if (!props) return null;\n\n    const user = new User(props.id, props.createdAt, props.updatedAt);\n    user._email = props.email;\n    user._password = props.password;\n    user._teacherId = props.teacherId ?? undefined;\n    user._permissions = props.permissions ?? [];\n\n    return user;\n  }\n}\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        },
+        {
+          "action": "save"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0016",
+      "title": "Criar user-repository.interface",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "nest g interface modules/users/domain/repositories/user-repository --flat"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0017",
+      "title": "Editar user-repository.interface.ts",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/modules/users/domain/repositories/user-repository.interface.ts"
+        },
+        {
+          "action": "replace",
+          "path": "src/modules/users/domain/repositories/user-repository.interface.ts",
+          "content": "import type { User } from \"@users/domain/models/user.entity\";\n\nexport const USER_REPOSITORY = Symbol(\"USER_REPOSITORY\");\n\nexport interface UserRepository {\n  create(user: User): Promise<void>;\n  update(user: User): Promise<void>;\n  delete(id: string): Promise<void>;\n  findAll(): Promise<User[]>;\n  findById(id: string): Promise<User | null>;\n  findByEmail(email: string): Promise<User | null>;\n}\n",
+          "position": "1:20",
+          "highlightWholeLine": true
+        },
+        {
+          "action": "save"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0018",
+      "title": "Criar user.schema",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "nest g class modules/users/infra/schemas/user.schema --flat --no-spec"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0019",
+      "title": "Editar user.schema.ts",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/modules/users/infra/schemas/user.schema.ts"
+        },
+        {
+          "action": "replace",
+          "path": "src/modules/users/infra/schemas/user.schema.ts",
+          "content": "import { teachersSchema } from \"@academic/teachers/infra/schemas/teacher.schema\";\nimport { pgTable, text, timestamp, uuid } from \"drizzle-orm/pg-core\";\n\nexport const usersSchema = pgTable(\"users\", {\n  id: uuid(\"id\").primaryKey().defaultRandom(),\n  email: text(\"email\").notNull().unique(),\n  password: text(\"password\").notNull(),\n  teacherId: uuid(\"teacher_id\").references(() => teachersSchema.id),\n  permissions: text(\"permissions\").array().notNull(),\n  createdAt: timestamp(\"created_at\", { withTimezone: true }).notNull(),\n  updatedAt: timestamp(\"updated_at\", { withTimezone: true }).notNull(),\n});\n",
+          "position": "1:20",
+          "highlightWholeLine": true
+        },
+        {
+          "action": "save"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0020",
+      "title": "Criar user.dto",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "nest g class modules/users/application/dto/user.dto --flat --no-spec"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0021",
+      "title": "Editar user.dto.ts",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/modules/users/application/dto/user.dto.ts"
+        },
+        {
+          "action": "replace",
+          "path": "src/modules/users/application/dto/user.dto.ts",
+          "content": "import type { Permission } from \"@shared/domain/enums/permission.enum\";\nimport type { User } from \"@users/domain/models/user.entity\";\nimport {\n  IsArray,\n  IsEmail,\n  IsOptional,\n  IsString,\n  IsUUID,\n  MinLength,\n} from \"class-validator\";\n\nexport class CreateUserDto {\n  @IsEmail()\n  email: string;\n\n  @IsString()\n  @MinLength(6)\n  password: string;\n\n  @IsOptional()\n  @IsUUID()\n  teacherId?: string;\n\n  @IsArray()\n  @IsString({ each: true })\n  permissions: Permission[];\n}\n\nexport class UpdateUserDto {\n  @IsOptional()\n  @IsEmail()\n  email?: string;\n\n  @IsOptional()\n  @IsString()\n  @MinLength(6)\n  password?: string;\n\n  @IsOptional()\n  @IsUUID()\n  teacherId?: string;\n\n  @IsOptional()\n  @IsArray()\n  @IsString({ each: true })\n  permissions?: Permission[];\n}\n\nexport class UserResponseDto {\n  private constructor(\n    public id: string,\n    public email: string,\n    public teacherId: string | undefined,\n    public permissions: string[],\n    public createdAt: Date | undefined,\n    public updatedAt: Date | undefined,\n  ) {}\n\n  static from(user: User | null): UserResponseDto | null {\n    if (!user) return null;\n    return new UserResponseDto(\n      user.id!,\n      user.email,\n      user.teacherId,\n      user.permissions,\n      user.createdAt,\n      user.updatedAt,\n    );\n  }\n}\n\nexport interface UserPayload {\n  id: string;\n  email: string;\n  permissions: string[];\n}\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        },
+        {
+          "action": "save"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0022",
+      "title": "Criar drizzle-user.repository",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "nest g class modules/users/infra/repositories/drizzle-user.repository --flat --no-spec"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0023",
+      "title": "Editar drizzle-user.repository.ts",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/modules/users/infra/repositories/drizzle-user.repository.ts"
+        },
+        {
+          "action": "replace",
+          "path": "src/modules/users/infra/repositories/drizzle-user.repository.ts",
+          "content": "import { Injectable } from \"@nestjs/common\";\nimport { DrizzleService } from \"@shared/infra/database/drizzle.service\";\nimport { User } from \"@users/domain/models/user.entity\";\nimport type { UserRepository } from \"@users/domain/repositories/user-repository.interface\";\nimport { usersSchema } from \"@users/infra/schemas/user.schema\";\nimport { eq } from \"drizzle-orm\";\n\n@Injectable()\nexport class DrizzleUserRepository implements UserRepository {\n  constructor(private readonly drizzleService: DrizzleService) {}\n\n  async create(user: User): Promise<void> {\n    await this.drizzleService.db.insert(usersSchema).values({\n      email: user.email,\n      password: user.password,\n      teacherId: user.teacherId ?? null,\n      permissions: user.permissions,\n      createdAt: new Date(),\n      updatedAt: new Date(),\n    });\n  }\n\n  async update(user: User): Promise<void> {\n    await this.drizzleService.db\n      .update(usersSchema)\n      .set({\n        email: user.email,\n        password: user.password,\n        teacherId: user.teacherId ?? null,\n        permissions: user.permissions,\n        updatedAt: new Date(),\n      })\n      .where(eq(usersSchema.id, user.id!));\n  }\n\n  async delete(id: string): Promise<void> {\n    await this.drizzleService.db\n      .delete(usersSchema)\n      .where(eq(usersSchema.id, id));\n  }\n\n  async findById(id: string): Promise<User | null> {\n    const result = await this.drizzleService.db\n      .select()\n      .from(usersSchema)\n      .where(eq(usersSchema.id, id))\n      .limit(1);\n\n    return User.restore(result[0]);\n  }\n\n  async findByEmail(email: string): Promise<User | null> {\n    const result = await this.drizzleService.db\n      .select()\n      .from(usersSchema)\n      .where(eq(usersSchema.email, email.toLowerCase()))\n      .limit(1);\n\n    return User.restore(result[0]);\n  }\n\n  async findAll(): Promise<User[]> {\n    const rows = await this.drizzleService.db.select().from(usersSchema);\n    return rows.map((row) => User.restore(row)!);\n  }\n}\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        },
+        {
+          "action": "save"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0024",
+      "title": "Criar user.service",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "nest g service modules/users/application/services/user --flat --no-spec"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0025",
+      "title": "Editar user.service.ts",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/modules/users/application/services/user.service.ts"
+        },
+        {
+          "action": "replace",
+          "path": "src/modules/users/application/services/user.service.ts",
+          "content": "import {\n  ConflictException,\n  Inject,\n  Injectable,\n  NotFoundException,\n} from \"@nestjs/common\";\nimport {\n  type CreateUserDto,\n  type UpdateUserDto,\n  type UserPayload,\n  UserResponseDto,\n} from \"@users/application/dto/user.dto\";\nimport { User } from \"@users/domain/models/user.entity\";\nimport {\n  USER_REPOSITORY,\n  type UserRepository,\n} from \"@users/domain/repositories/user-repository.interface\";\nimport bcrypt from \"bcryptjs\";\n\n@Injectable()\nexport class UserService {\n  constructor(\n    @Inject(USER_REPOSITORY)\n    private readonly userRepository: UserRepository,\n  ) {}\n\n  async create(dto: CreateUserDto): Promise<void> {\n    const existing = await this.userRepository.findByEmail(dto.email);\n    if (existing) throw new ConflictException(\"Email already registered\");\n\n    const hashedPassword = await bcrypt.hash(dto.password, 10);\n    const user = User.restore({\n      email: dto.email.toLowerCase(),\n      password: hashedPassword,\n      teacherId: dto.teacherId,\n      permissions: dto.permissions as string[],\n    })!;\n\n    await this.userRepository.create(user);\n  }\n\n  async edit(id: string, dto: UpdateUserDto): Promise<void> {\n    const user = await this.userRepository.findById(id);\n    if (!user) throw new NotFoundException(\"User not found\");\n\n    if (dto.email && dto.email !== user.email) {\n      const existing = await this.userRepository.findByEmail(dto.email);\n      if (existing) throw new ConflictException(\"Email already registered\");\n      user.withEmail(dto.email.toLowerCase());\n    }\n\n    if (dto.password) {\n      const hashedPassword = await bcrypt.hash(dto.password, 10);\n      user.withPassword(hashedPassword);\n    }\n\n    if (dto.teacherId !== undefined) user.withTeacherId(dto.teacherId);\n    if (dto.permissions !== undefined)\n      user.withPermissions(dto.permissions as string[]);\n\n    await this.userRepository.update(user);\n  }\n\n  async remove(id: string): Promise<void> {\n    await this.userRepository.delete(id);\n  }\n\n  async list(): Promise<UserResponseDto[]> {\n    const users = await this.userRepository.findAll();\n    return users.map((u) => UserResponseDto.from(u)!);\n  }\n\n  async findById(id: string): Promise<UserResponseDto | null> {\n    const user = await this.userRepository.findById(id);\n    return UserResponseDto.from(user);\n  }\n\n  async validateCredentials(\n    email: string,\n    password: string,\n  ): Promise<UserPayload | null> {\n    const user = await this.userRepository.findByEmail(email.toLowerCase());\n    if (!user) return null;\n\n    const valid = await bcrypt.compare(password, user.password);\n    if (!valid) return null;\n\n    return { id: user.id!, email: user.email, permissions: user.permissions };\n  }\n}\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        },
+        {
+          "action": "save"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0026",
+      "title": "Criar users.controller",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "nest g controller modules/users/infra/controllers/users --flat --no-spec"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0027",
+      "title": "Editar users.controller.ts",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/modules/users/infra/controllers/users.controller.ts"
+        },
+        {
+          "action": "replace",
+          "path": "src/modules/users/infra/controllers/users.controller.ts",
+          "content": "import {\n  Body,\n  Controller,\n  Delete,\n  Get,\n  Param,\n  Post,\n  Put,\n} from \"@nestjs/common\";\nimport { Permission } from \"@shared/domain/enums/permission.enum\";\nimport { RequirePermissions } from \"@shared/infra/decorators/permissions.decorator\";\nimport { CreateUserDto, UpdateUserDto } from \"@users/application/dto/user.dto\";\nimport { UserService } from \"@users/application/services/user.service\";\n\n@Controller(\"users\")\nexport class UsersController {\n  constructor(private readonly userService: UserService) {}\n\n  @Get()\n  @RequirePermissions(Permission.USERS_READ)\n  async findAll() {\n    return this.userService.list();\n  }\n\n  @Get(\":id\")\n  @RequirePermissions(Permission.USERS_READ)\n  async findById(@Param(\"id\") id: string) {\n    return this.userService.findById(id);\n  }\n\n  @Post()\n  @RequirePermissions(Permission.USERS_WRITE)\n  async create(@Body() body: CreateUserDto) {\n    return this.userService.create(body);\n  }\n\n  @Put(\":id\")\n  @RequirePermissions(Permission.USERS_WRITE)\n  async update(@Param(\"id\") id: string, @Body() body: UpdateUserDto) {\n    return this.userService.edit(id, body);\n  }\n\n  @Delete(\":id\")\n  @RequirePermissions(Permission.USERS_DELETE)\n  async remove(@Param(\"id\") id: string) {\n    return this.userService.remove(id);\n  }\n}\n",
+          "position": "1:60",
+          "highlightWholeLine": true
+        },
+        {
+          "action": "save"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0028",
+      "title": "Editar users.module.ts",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/modules/users/users.module.ts"
+        },
+        {
+          "action": "replace",
+          "path": "src/modules/users/users.module.ts",
+          "content": "import { Module } from \"@nestjs/common\";\nimport { SharedModule } from \"@shared/shared.module\";\nimport { UserService } from \"@users/application/services/user.service\";\nimport { USER_REPOSITORY } from \"@users/domain/repositories/user-repository.interface\";\nimport { UsersController } from \"@users/infra/controllers/users.controller\";\nimport { DrizzleUserRepository } from \"@users/infra/repositories/drizzle-user.repository\";\n\n@Module({\n  imports: [SharedModule],\n  controllers: [UsersController],\n  providers: [\n    UserService,\n    DrizzleUserRepository,\n    {\n      provide: USER_REPOSITORY,\n      useExisting: DrizzleUserRepository,\n    },\n  ],\n  exports: [UserService],\n})\nexport class UsersModule {}\n",
+          "position": "1:30",
+          "highlightWholeLine": true
+        },
+        {
+          "action": "save"
+        }
+      ]
+    },
+    {
+      "id": "scene-aula002-0029",
+      "title": "Módulo Auth — estrutura de pastas",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "nest g module modules/auth"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0030",
+      "title": "Criar auth.dto",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "nest g class modules/auth/application/dto/auth.dto --flat --no-spec"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0031",
+      "title": "Editar auth.dto.ts",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/modules/auth/application/dto/auth.dto.ts"
+        },
+        {
+          "action": "replace",
+          "path": "src/modules/auth/application/dto/auth.dto.ts",
+          "content": "import { IsEmail, IsString, MinLength } from \"class-validator\";\n\nexport class LoginDto {\n  @IsEmail()\n  email: string;\n\n  @IsString()\n  @MinLength(6)\n  password: string;\n}\n",
+          "position": "1:20",
+          "highlightWholeLine": true
+        },
+        {
+          "action": "save"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0032",
+      "title": "Criar jwt-auth.guard",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "nest g class modules/auth/infra/guards/jwt-auth.guard --flat --no-spec"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0033",
+      "title": "Editar jwt-auth.guard.ts",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/modules/auth/infra/guards/jwt-auth.guard.ts"
+        },
+        {
+          "action": "replace",
+          "path": "src/modules/auth/infra/guards/jwt-auth.guard.ts",
+          "content": "import {\n  CanActivate,\n  ExecutionContext,\n  Injectable,\n  UnauthorizedException,\n} from \"@nestjs/common\";\nimport { Reflector } from \"@nestjs/core\";\nimport { JwtService } from \"@nestjs/jwt\";\nimport type { AuthenticatedUser } from \"@shared/infra/decorators/current-user.decorator\";\nimport { IS_PUBLIC_KEY } from \"@shared/infra/decorators/public.decorator\";\nimport type { Request } from \"express\";\n\n@Injectable()\nexport class JwtAuthGuard implements CanActivate {\n  constructor(\n    private readonly jwtService: JwtService,\n    private readonly reflector: Reflector,\n  ) {}\n\n  async canActivate(context: ExecutionContext): Promise<boolean> {\n    const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [\n      context.getHandler(),\n      context.getClass(),\n    ]);\n\n    if (isPublic) return true;\n\n    const request = context.switchToHttp().getRequest<Request>();\n    const token = this.extractToken(request);\n\n    if (!token) throw new UnauthorizedException(\"Missing token\");\n\n    try {\n      const payload = await this.jwtService.verifyAsync<AuthenticatedUser>(\n        token,\n        { secret: process.env.JWT_SECRET },\n      );\n      (request as Request & { user: AuthenticatedUser }).user = payload;\n    } catch {\n      throw new UnauthorizedException(\"Invalid or expired token\");\n    }\n\n    return true;\n  }\n\n  private extractToken(request: Request): string | undefined {\n    const [type, token] = request.headers.authorization?.split(\" \") ?? [];\n    return type === \"Bearer\" ? token : undefined;\n  }\n}\n",
+          "position": "1:60",
+          "highlightWholeLine": true
+        },
+        {
+          "action": "save"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0034",
+      "title": "Criar permissions.guard",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "nest g class modules/auth/infra/guards/permissions.guard --flat --no-spec"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0035",
+      "title": "Editar permissions.guard.ts",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/modules/auth/infra/guards/permissions.guard.ts"
+        },
+        {
+          "action": "replace",
+          "path": "src/modules/auth/infra/guards/permissions.guard.ts",
+          "content": "import {\n  CanActivate,\n  ExecutionContext,\n  ForbiddenException,\n  Injectable,\n} from \"@nestjs/common\";\nimport { Reflector } from \"@nestjs/core\";\nimport type { AuthenticatedUser } from \"@shared/infra/decorators/current-user.decorator\";\nimport { PERMISSIONS_KEY } from \"@shared/infra/decorators/permissions.decorator\";\n\n@Injectable()\nexport class PermissionsGuard implements CanActivate {\n  constructor(private readonly reflector: Reflector) {}\n\n  canActivate(context: ExecutionContext): boolean {\n    const required = this.reflector.getAllAndOverride<string[]>(\n      PERMISSIONS_KEY,\n      [context.getHandler(), context.getClass()],\n    );\n\n    if (!required || required.length === 0) return true;\n\n    const request = context\n      .switchToHttp()\n      .getRequest<{ user: AuthenticatedUser }>();\n    const user = request.user;\n\n    const hasPermission = required.every((permission) =>\n      user?.permissions?.includes(permission),\n    );\n\n    if (!hasPermission) {\n      throw new ForbiddenException(\"Insufficient permissions\");\n    }\n\n    return true;\n  }\n}\n",
+          "position": "1:50",
+          "highlightWholeLine": true
+        },
+        {
+          "action": "save"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0036",
+      "title": "Criar auth.service",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "nest g service modules/auth/application/services/auth --flat --no-spec"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0037",
+      "title": "Editar auth.service.ts",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/modules/auth/application/services/auth.service.ts"
+        },
+        {
+          "action": "replace",
+          "path": "src/modules/auth/application/services/auth.service.ts",
+          "content": "import type { LoginDto } from \"@auth/application/dto/auth.dto\";\nimport { Injectable, UnauthorizedException } from \"@nestjs/common\";\nimport { JwtService } from \"@nestjs/jwt\";\nimport { UserService } from \"@users/application/services/user.service\";\n\n@Injectable()\nexport class AuthService {\n  constructor(\n    private readonly userService: UserService,\n    private readonly jwtService: JwtService,\n  ) {}\n\n  async login(dto: LoginDto): Promise<{ accessToken: string }> {\n    const user = await this.userService.validateCredentials(\n      dto.email,\n      dto.password,\n    );\n\n    if (!user) throw new UnauthorizedException(\"Invalid credentials\");\n\n    const accessToken = await this.jwtService.signAsync({\n      sub: user.id,\n      email: user.email,\n      permissions: user.permissions,\n    });\n\n    return { accessToken };\n  }\n}\n",
+          "position": "1:40",
+          "highlightWholeLine": true
+        },
+        {
+          "action": "save"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0038",
+      "title": "Criar auth.controller",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "nest g controller modules/auth/infra/controllers/auth --flat --no-spec"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0039",
+      "title": "Editar auth.controller.ts",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/modules/auth/infra/controllers/auth.controller.ts"
+        },
+        {
+          "action": "replace",
+          "path": "src/modules/auth/infra/controllers/auth.controller.ts",
+          "content": "import { LoginDto } from \"@auth/application/dto/auth.dto\";\nimport { AuthService } from \"@auth/application/services/auth.service\";\nimport { Body, Controller, Post } from \"@nestjs/common\";\nimport { Public } from \"@shared/infra/decorators/public.decorator\";\n\n@Controller(\"auth\")\nexport class AuthController {\n  constructor(private readonly authService: AuthService) {}\n\n  @Post(\"login\")\n  @Public()\n  async login(@Body() body: LoginDto) {\n    return this.authService.login(body);\n  }\n}\n",
+          "position": "1:20",
+          "highlightWholeLine": true
+        },
+        {
+          "action": "save"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0040",
+      "title": "Editar auth.module.ts",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/modules/auth/auth.module.ts"
+        },
+        {
+          "action": "replace",
+          "path": "src/modules/auth/auth.module.ts",
+          "content": "import { AuthService } from \"@auth/application/services/auth.service\";\nimport { AuthController } from \"@auth/infra/controllers/auth.controller\";\nimport { JwtAuthGuard } from \"@auth/infra/guards/jwt-auth.guard\";\nimport { PermissionsGuard } from \"@auth/infra/guards/permissions.guard\";\nimport { Module } from \"@nestjs/common\";\nimport { ConfigModule, ConfigService } from \"@nestjs/config\";\nimport { APP_GUARD } from \"@nestjs/core\";\nimport { JwtModule } from \"@nestjs/jwt\";\nimport { UsersModule } from \"@users/users.module\";\n\n@Module({\n  imports: [\n    JwtModule.registerAsync({\n      global: true,\n      imports: [ConfigModule],\n      inject: [ConfigService],\n      useFactory: (config: ConfigService) => ({\n        secret: config.get<string>(\"JWT_SECRET\"),\n        signOptions: { expiresIn: \"1d\" },\n      }),\n    }),\n    UsersModule,\n  ],\n  controllers: [AuthController],\n  providers: [\n    AuthService,\n    { provide: APP_GUARD, useClass: JwtAuthGuard },\n    { provide: APP_GUARD, useClass: PermissionsGuard },\n  ],\n})\nexport class AuthModule {}\n",
+          "position": "1:40",
+          "highlightWholeLine": true
+        },
+        {
+          "action": "save"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0041",
+      "title": "Atualizar drizzle.service.ts",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/shared/infra/database/drizzle.service.ts"
+        },
+        {
+          "action": "replace",
+          "path": "src/shared/infra/database/drizzle.service.ts",
+          "content": "import { studentsSchema } from \"@academic/students/infra/schemas/student.schema\";\nimport { subjectsSchema } from \"@academic/subjects/infra/schemas/subject.schema\";\nimport { teachersSchema } from \"@academic/teachers/infra/schemas/teacher.schema\";\nimport {\n  attendanceStatusEnum,\n  attendancesSchema,\n} from \"@attendance/infra/schemas/attendance.schema\";\nimport {\n  classOfferingStatusEnum,\n  classOfferingsSchema,\n} from \"@class-offering/infra/schemas/class-offering.schema\";\nimport {\n  enrollmentStatusEnum,\n  enrollmentsSchema,\n} from \"@enrollment/infra/schemas/enrollment.schema\";\nimport { Injectable, type OnModuleDestroy } from \"@nestjs/common\";\nimport { usersSchema } from \"@users/infra/schemas/user.schema\";\nimport { drizzle } from \"drizzle-orm/node-postgres\";\nimport { Pool } from \"pg\";\n\nconst schema = {\n  subjectsSchema,\n  studentsSchema,\n  teachersSchema,\n  classOfferingsSchema,\n  classOfferingStatusEnum,\n  enrollmentsSchema,\n  enrollmentStatusEnum,\n  attendancesSchema,\n  attendanceStatusEnum,\n  usersSchema,\n};\n\n@Injectable()\nexport class DrizzleService implements OnModuleDestroy {\n  private readonly pool: Pool;\n  public readonly db;\n\n  constructor() {\n    this.pool = new Pool({\n      connectionString: process.env.DATABASE_URL,\n    });\n\n    this.db = drizzle(this.pool, { schema });\n  }\n\n  async onModuleDestroy() {\n    await this.pool.end();\n  }\n}\n",
+          "position": "1:60",
+          "highlightWholeLine": true
+        },
+        {
+          "action": "save"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0042",
+      "title": "Atualizar app.module.ts",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/app.module.ts"
+        },
+        {
+          "action": "replace",
+          "path": "src/app.module.ts",
+          "content": "import { AcademicModule } from \"@academic/academic.module\";\nimport { AttendanceModule } from \"@attendance/attendance.module\";\nimport { AuthModule } from \"@auth/auth.module\";\nimport { ClassOfferingModule } from \"@class-offering/class-offering.module\";\nimport { EnrollmentModule } from \"@enrollment/enrollment.module\";\nimport { Module } from \"@nestjs/common\";\nimport { ConfigModule } from \"@nestjs/config\";\nimport { SharedModule } from \"@shared/shared.module\";\nimport { UsersModule } from \"@users/users.module\";\n\n@Module({\n  imports: [\n    ConfigModule.forRoot(),\n    SharedModule,\n    UsersModule,\n    AuthModule,\n    AcademicModule,\n    ClassOfferingModule,\n    EnrollmentModule,\n    AttendanceModule,\n  ],\n})\nexport class AppModule {}\n",
+          "position": "1:30",
+          "highlightWholeLine": true
+        },
+        {
+          "action": "save"
+        }
+      ]
+    },
+    {
+      "id": "scene-aula002-0043",
+      "title": "Protegendo as rotas com @RequirePermissions",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/modules/academic/teachers/infra/controllers/teachers.controller.ts"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0044",
+      "title": "Editar teachers.controller.ts",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/teachers/infra/controllers/teachers.controller.ts",
+          "content": "import { TeacherDto } from \"@academic/teachers/application/dto/teacher.dto\";\nimport { TeacherService } from \"@academic/teachers/application/services/teacher.service\";\nimport {\n  Body,\n  Controller,\n  Delete,\n  Get,\n  Param,\n  Post,\n  Put,\n} from \"@nestjs/common\";\nimport { Permission } from \"@shared/domain/enums/permission.enum\";\nimport { RequirePermissions } from \"@shared/infra/decorators/permissions.decorator\";\n\n@Controller(\"teachers\")\nexport class TeachersController {\n  constructor(private readonly teacherService: TeacherService) {}\n\n  @Get()\n  @RequirePermissions(Permission.TEACHERS_READ)\n  async findAll() {\n    return this.teacherService.list();\n  }\n\n  @Get(\":id\")\n  @RequirePermissions(Permission.TEACHERS_READ)\n  async findById(@Param(\"id\") id: string) {\n    return this.teacherService.findById(id);\n  }\n\n  @Post()\n  @RequirePermissions(Permission.TEACHERS_WRITE)\n  async create(@Body() body: TeacherDto) {\n    return this.teacherService.create(body);\n  }\n\n  @Put(\":id\")\n  @RequirePermissions(Permission.TEACHERS_WRITE)\n  async update(@Param(\"id\") id: string, @Body() body: TeacherDto) {\n    return this.teacherService.edit(id, body);\n  }\n\n  @Delete(\":id\")\n  @RequirePermissions(Permission.TEACHERS_DELETE)\n  async remove(@Param(\"id\") id: string) {\n    return this.teacherService.remove(id);\n  }\n}\n",
+          "position": "1:60",
+          "highlightWholeLine": true
+        },
+        {
+          "action": "save"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0045",
+      "title": "Aplicar @RequirePermissions nos demais controllers",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "npx biome check --write ."
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0046",
+      "title": "Gerar migration da tabela users",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "npm run db:generate"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0047",
+      "title": "Aplicar migration no banco",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "npm run db:migrate"
+        }
+      ]
+    },
+    {
+      "id": "demo-aula002-0048",
+      "title": "Subir a aplicação",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "npm run start:dev"
+        }
+      ]
+    }
+  ]
+}

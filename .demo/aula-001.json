@@ -1,0 +1,1252 @@
+{
+  "$schema": "https://demotime.show/demo-time.schema.json",
+  "title": "Aula 001",
+  "demos": [
+    {
+      "id": "scene-mmi5fagl-wr6i",
+      "title": "Abrir terminal",
+      "steps": [
+        {
+          "action": "openTerminal",
+          "terminalId": "aula"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmi65k3e-xt2a",
+      "title": "Instalação das dependências drizzle",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "npm install drizzle-orm pg"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmi65f6a-4zl5",
+      "title": "Instalação das dependências drizzle",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "npm install -D drizzle-kit @types/pg"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmi66a5i-7khy",
+      "title": "Instalação das dependências validator",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "npm install class-validator class-transformer"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmi66o2k-0z9t",
+      "title": "Instalação das dependências nestjs",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "npm install @nestjs/config"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmib82tw-2q9y",
+      "title": "Instalação das dependências biomejs",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "npm install -D @biomejs/biome"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmj98p58-wpa3",
+      "title": "Abrir package.json",
+      "steps": [
+        {
+          "action": "open",
+          "path": "package.json"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmj9j9bc-3v6x",
+      "title": "Editar package.json",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "package.json",
+          "content": "{\n  \"name\": \"school-control\",\n  \"version\": \"0.0.1\",\n  \"scripts\": {\n    \"build\": \"nest build\",\n    \"start\": \"nest start\",\n    \"start:dev\": \"nest start --watch\",\n    \"start:debug\": \"nest start --debug --watch\",\n    \"start:prod\": \"node dist/main\",\n    \"db:generate\": \"drizzle-kit generate\",\n    \"db:migrate\": \"drizzle-kit migrate\",\n    \"db:push\": \"drizzle-kit push\",\n    \"db:studio\": \"drizzle-kit studio\",\n    \"lint\": \"biome lint .\",\n    \"check\": \"biome check .\"\n  },\n  \"dependencies\": {\n    \"@nestjs/common\": \"^11.0.1\",\n    \"@nestjs/config\": \"~4.0.3\",\n    \"@nestjs/core\": \"^11.0.1\",\n    \"@nestjs/platform-express\": \"^11.0.1\",\n    \"class-transformer\": \"~0.5.1\",\n    \"class-validator\": \"~0.15.1\",\n    \"drizzle-orm\": \"~0.45.1\",\n    \"pg\": \"~8.20.0\",\n    \"reflect-metadata\": \"^0.2.2\",\n    \"rxjs\": \"^7.8.1\"\n  },\n  \"devDependencies\": {\n    \"@biomejs/biome\": \"~2.4.6\",\n    \"@nestjs/cli\": \"^11.0.0\",\n    \"@nestjs/schematics\": \"^11.0.0\",\n    \"@nestjs/testing\": \"^11.0.1\",\n    \"@types/express\": \"^5.0.0\",\n    \"@types/jest\": \"^30.0.0\",\n    \"@types/node\": \"^22.10.7\",\n    \"@types/pg\": \"~8.18.0\",\n    \"@types/supertest\": \"^6.0.2\",\n    \"drizzle-kit\": \"~0.31.9\",\n    \"globals\": \"^16.0.0\",\n    \"jest\": \"^30.0.0\",\n    \"source-map-support\": \"^0.5.21\",\n    \"supertest\": \"^7.0.0\",\n    \"ts-jest\": \"^29.2.5\",\n    \"ts-loader\": \"^9.5.2\",\n    \"ts-node\": \"^10.9.2\",\n    \"tsconfig-paths\": \"^4.2.0\",\n    \"typescript\": \"^5.7.3\"\n  }\n}",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmj9bava-1val",
+      "title": "Rodar npm install",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "npm i"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmib9i0f-hycv",
+      "title": "Create biome",
+      "steps": [
+        {
+          "action": "create",
+          "path": "biome.json"
+        },
+        {
+          "action": "open",
+          "path": "biome.json"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmibtmst-4se7",
+      "title": "Insert biome",
+      "steps": [
+        {
+          "action": "insert",
+          "path": "biome.json",
+          "content": "{\n  \"$schema\": \"https://biomejs.dev/schemas/2.4.6/schema.json\",\n  \"vcs\": {\n    \"enabled\": true,\n    \"clientKind\": \"git\",\n    \"useIgnoreFile\": true\n  },\n  \"files\": {\n    \"includes\": [\"**\", \"!!**/dist\", \"!src/shared/infra/database/drizzle\"]\n  },\n  \"formatter\": {\n    \"enabled\": true,\n    \"indentWidth\": 2,\n    \"indentStyle\": \"space\"\n  },\n  \"linter\": {\n    \"enabled\": true,\n    \"rules\": {\n      \"recommended\": true,\n      \"style\": {\n        \"useImportType\": \"off\",\n        \"noNonNullAssertion\": \"off\"\n      },\n      \"correctness\": {\n        \"noUnusedFunctionParameters\": \"off\"\n      }\n    }\n  },\n  \"javascript\": {\n    \"formatter\": {\n      \"quoteStyle\": \"double\"\n    },\n    \"parser\": {\n      \"unsafeParameterDecoratorsEnabled\": true\n    }\n  },\n  \"assist\": {\n    \"enabled\": true,\n    \"actions\": {\n      \"source\": {\n        \"organizeImports\": \"on\"\n      }\n    }\n  }\n}\n",
+          "position": "1",
+          "highlightWholeLine": true
+        },
+        {
+          "action": "save"
+        }
+      ]
+    },
+    {
+      "id": "scene-mmi5isq6-pxe3",
+      "title": "Create .env",
+      "steps": [
+        {
+          "action": "create",
+          "path": ".env"
+        },
+        {
+          "action": "open",
+          "path": ".env"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmi648gk-f7pa",
+      "title": "Insert .env",
+      "steps": [
+        {
+          "action": "insert",
+          "path": ".env",
+          "content": "DATABASE_URL=postgres://postgres:postgres@localhost:5432/custom\nPORT=3000",
+          "highlightWholeLine": true,
+          "position": "1"
+        },
+        {
+          "action": "save"
+        }
+      ]
+    },
+    {
+      "id": "scene-mmi5s4ib-dkmc",
+      "title": "Open app.module.ts",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/app.module.ts"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmi64xye-1fp9",
+      "title": "Replace app.module.ts",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/app.module.ts"
+        },
+        {
+          "action": "replace",
+          "path": "./src/app.module.ts",
+          "content": "import { Module } from \"@nestjs/common\";\nimport { ConfigModule } from \"@nestjs/config\";\n\n@Module({\n  imports: [ConfigModule.forRoot()],\n})\nexport class AppModule {}\n",
+          "position": "1:50",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "scene-mmi6v8g2-yojz",
+      "title": "Generate module students",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "nest g module modules/academic/students"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmi6w4ri-sh1v",
+      "title": "Generate student.entity",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "nest g class modules/academic/students/domain/models/student.entity --flat --no-spec"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmi6wg18-6lam",
+      "title": "Generate student-repository.interface",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "nest g interface modules/academic/students/domain/repositories/student-repository --flat"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmi6wr5i-5vwm",
+      "title": "Generate student.dto",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "nest g class modules/academic/students/application/dto/student.dto --flat --no-spec"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmi6x1m5-9ft9",
+      "title": "Generate create-student.service",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "nest g service modules/academic/students/application/services/create-student --flat --no-spec"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmi6xapf-96q1",
+      "title": "Generate edit-student.service",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "nest g service modules/academic/students/application/services/edit-student --flat --no-spec"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmi6xkcs-cib4",
+      "title": "Generate list-students.service",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "nest g service modules/academic/students/application/services/list-students --flat --no-spec"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmib28en-4wpe",
+      "title": "Generate return-student.service",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "nest g service modules/academic/students/application/services/return-student --flat --no-spec"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmib2uw6-0cr3",
+      "title": "Generate remove-student.service",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "nest g service modules/academic/students/application/services/remove-student --flat --no-spec"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmi6xt6x-l0k9",
+      "title": "Generate students.controller",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "nest g controller modules/academic/students/infra/controllers/students --flat --no-spec"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmi6y3cc-kc9m",
+      "title": "Generate drizzle-student.repository",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "nest g class modules/academic/students/infra/repositories/drizzle-student.repository --flat --no-spec"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmi6yb69-5mrw",
+      "title": "Generate student.schema",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "nest g class modules/academic/students/infra/database/schemas/student.schema --flat --no-spec"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmi6yigz-7t1i",
+      "title": "Generate database",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "nest g module shared/infra/database"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmi6ypq8-njo5",
+      "title": "Generate drizzle",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        },
+        {
+          "action": "typeText",
+          "content": "nest g service shared/infra/database/drizzle --flat --no-spec"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmibuxqn-enj9",
+      "title": "Open tsconfig.json",
+      "steps": [
+        {
+          "action": "open",
+          "path": "tsconfig.json"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmibisie-5zhf",
+      "title": "Configure tsconfig.json",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "tsconfig.json",
+          "content": "{\n  \"compilerOptions\": {\n    \"module\": \"nodenext\",\n    \"moduleResolution\": \"nodenext\",\n    \"resolvePackageJsonExports\": true,\n    \"esModuleInterop\": true,\n    \"isolatedModules\": true,\n    \"declaration\": true,\n    \"removeComments\": true,\n    \"emitDecoratorMetadata\": true,\n    \"experimentalDecorators\": true,\n    \"allowSyntheticDefaultImports\": true,\n    \"target\": \"ES2023\",\n    \"sourceMap\": true,\n    \"outDir\": \"./dist\",\n    \"baseUrl\": \"./\",\n    \"incremental\": true,\n    \"skipLibCheck\": true,\n    \"strictNullChecks\": true,\n    \"forceConsistentCasingInFileNames\": true,\n    \"noImplicitAny\": true,\n    \"strictBindCallApply\": true,\n    \"noFallthroughCasesInSwitch\": true,\n    \"paths\": {\n      \"@infra/*\": [\"src/shared/infra/*\"],\n      \"@academic/*\": [\"src/modules/academic/*\"]\n    }\n  }\n}\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        },
+        {
+          "action": "save"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmid9aop-xuc5",
+      "title": "Create drizzle.config.ts",
+      "steps": [
+        {
+          "action": "create",
+          "path": "drizzle.config.ts"
+        },
+        {
+          "action": "open",
+          "path": "drizzle.config.ts"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmidabz2-evc3",
+      "title": "Insert drizzle.config.ts 1",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "drizzle.config.ts",
+          "content": "import \"dotenv/config\";\nimport { defineConfig } from \"drizzle-kit\";\n\nexport default defineConfig({\n  schema: \"\",\n  out: \"\",\n  dialect: \"postgresql\",\n  dbCredentials: {\n    url: process.env.DATABASE_URL!,\n  },\n});\n",
+          "position": "1:100"
+        },
+        {
+          "action": "save"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmidc5n6-36st",
+      "title": "Insert drizzle.config.ts 2",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "drizzle.config.ts",
+          "content": "import \"dotenv/config\";\nimport { defineConfig } from \"drizzle-kit\";\n\nexport default defineConfig({\n  schema: \"./src/modules/**/infra/database/schemas/*.ts\",\n  out: \"./src/shared/infra/database/drizzle\",\n  dialect: \"postgresql\",\n  dbCredentials: {\n    url: process.env.DATABASE_URL!,\n  },\n});\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        },
+        {
+          "action": "save"
+        }
+      ]
+    },
+    {
+      "id": "scene-mmic01am-8d7m",
+      "title": "Open student.entity.ts",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/modules/academic/students/domain/models/student.entity.ts"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmic13a0-jwu9",
+      "title": "Edit student.entity.ts 1",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/domain/models/student.entity.ts",
+          "content": "export class Student {\n  private readonly _id?: string;\n  private _name: string;\n  private _email: string;\n  private _document: string;\n  private _registration: string;\n  private readonly _createdAt?: Date;\n  private readonly _updatedAt?: Date;\n}\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmic2r81-feyd",
+      "title": "Edit student.entity.ts 2",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/domain/models/student.entity.ts",
+          "content": "export class Student {\n  private readonly _id?: string;\n  private _name: string;\n  private _email: string;\n  private _document: string;\n  private _registration: string;\n  private readonly _createdAt?: Date;\n  private readonly _updatedAt?: Date;\n\n  private constructor(id?: string, createdAt?: Date, updatedAt?: Date) {\n    this._id = id;\n    this._createdAt = createdAt;\n    this._updatedAt = updatedAt;\n  }\n}",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmic4iwt-rdj4",
+      "title": "Edit student.entity.ts 3",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/domain/models/student.entity.ts",
+          "content": "export class Student {\n  private readonly _id?: string;\n  private _name: string;\n  private _email: string;\n  private _document: string;\n  private _registration: string;\n  private readonly _createdAt?: Date;\n  private readonly _updatedAt?: Date;\n\n  private constructor(id?: string, createdAt?: Date, updatedAt?: Date) {\n    this._id = id;\n    this._createdAt = createdAt;\n    this._updatedAt = updatedAt;\n  }\n\n  get id(): string | undefined {\n    return this._id;\n  }\n\n  get name(): string {\n    return this._name;\n  }\n\n  get email(): string {\n    return this._email;\n  }\n\n  get document(): string {\n    return this._document;\n  }\n\n  get registration(): string {\n    return this._registration;\n  }\n\n  get createdAt(): Date | undefined {\n    return this._createdAt;\n  }\n\n  get updatedAt(): Date | undefined {\n    return this._updatedAt;\n  }\n}",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmic5971-gjcn",
+      "title": "Edit student.entity.ts 4",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/domain/models/student.entity.ts",
+          "content": "export class Student {\n  private readonly _id?: string;\n  private _name: string;\n  private _email: string;\n  private _document: string;\n  private _registration: string;\n  private readonly _createdAt?: Date;\n  private readonly _updatedAt?: Date;\n\n  private constructor(id?: string, createdAt?: Date, updatedAt?: Date) {\n    this._id = id;\n    this._createdAt = createdAt;\n    this._updatedAt = updatedAt;\n  }\n\n  get id(): string | undefined {\n    return this._id;\n  }\n\n  get name(): string {\n    return this._name;\n  }\n\n  get email(): string {\n    return this._email;\n  }\n\n  get document(): string {\n    return this._document;\n  }\n\n  get registration(): string {\n    return this._registration;\n  }\n\n  get createdAt(): Date | undefined {\n    return this._createdAt;\n  }\n\n  get updatedAt(): Date | undefined {\n    return this._updatedAt;\n  }\n\n  withName(name: string) {\n    this._name = name;\n    return this;\n  }\n\n  withEmail(email: string) {\n    this._email = email;\n    return this;\n  }\n\n  withDocument(document: string) {\n    this._document = document;\n    return this;\n  }\n\n  withRegistration(registration: string) {\n    this._registration = registration;\n    return this;\n  }\n}",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmieh4a8-gku7",
+      "title": "Edit student.entity.ts 5",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/domain/models/student.entity.ts",
+          "content": "export class Student {\n  private readonly _id?: string;\n  private _name: string;\n  private _email: string;\n  private _document: string;\n  private _registration: string;\n  private readonly _createdAt?: Date;\n  private readonly _updatedAt?: Date;\n\n  private constructor(id?: string, createdAt?: Date, updatedAt?: Date) {\n    this._id = id;\n    this._createdAt = createdAt;\n    this._updatedAt = updatedAt;\n  }\n\n  get id(): string | undefined {\n    return this._id;\n  }\n\n  get name(): string {\n    return this._name;\n  }\n\n  get email(): string {\n    return this._email;\n  }\n\n  get document(): string {\n    return this._document;\n  }\n\n  get registration(): string {\n    return this._registration;\n  }\n\n  get createdAt(): Date | undefined {\n    return this._createdAt;\n  }\n\n  get updatedAt(): Date | undefined {\n    return this._updatedAt;\n  }\n\n  withName(name: string) {\n    this._name = name;\n    return this;\n  }\n\n  withEmail(email: string) {\n    this._email = email;\n    return this;\n  }\n\n  withDocument(document: string) {\n    this._document = document;\n    return this;\n  }\n\n  withRegistration(registration: string) {\n    this._registration = registration;\n    return this;\n  }\n\n  static restore(props?: {\n    id?: string;\n    name: string;\n    email: string;\n    document: string;\n    registration: string;\n    createdAt?: Date;\n    updatedAt?: Date;\n  }): Student | null {\n    if (!props) return null;\n\n    const student = new Student(props.id, props.createdAt, props.updatedAt);\n\n    student._name = props.name;\n    student._email = props.email;\n    student._document = props.document;\n    student._registration = props.registration;\n\n    return student;\n  }\n}\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmic62s2-hgnl",
+      "title": "Open student-repository.interface",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/modules/academic/students/domain/repositories/student-repository.interface.ts"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmic6q6s-6mou",
+      "title": "Edit student-repository.interface 1",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/domain/repositories/student-repository.interface.ts",
+          "content": "import type { Student } from \"@academic/students/domain/models/student.entity\";\n\nexport interface StudentRepository {\n  create(student: Student): Promise<void>;\n}\n",
+          "position": "1:20",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmj9q8or-0sk8",
+      "title": "Edit student-repository.interface 2",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/domain/repositories/student-repository.interface.ts",
+          "content": "import type { Student } from \"@academic/students/domain/models/student.entity\";\n\nexport interface StudentRepository {\n  create(student: Student): Promise<void>;\n  update(student: Student): Promise<void>;\n}\n",
+          "position": "1:20",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmj9tsct-ad50",
+      "title": "Edit student-repository.interface 3",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/domain/repositories/student-repository.interface.ts",
+          "content": "import type { Student } from \"@academic/students/domain/models/student.entity\";\n\nexport interface StudentRepository {\n  create(student: Student): Promise<void>;\n  update(student: Student): Promise<void>;\n  delete(id: string): Promise<void>;\n}\n",
+          "position": "1:20",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmj9ur7f-8twh",
+      "title": "Edit student-repository.interface 4",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/domain/repositories/student-repository.interface.ts",
+          "content": "import type { Student } from \"@academic/students/domain/models/student.entity\";\n\nexport interface StudentRepository {\n  create(student: Student): Promise<void>;\n  update(student: Student): Promise<void>;\n  delete(id: string): Promise<void>;\n  findAll(): Promise<Student[]>;\n  findById(id: string): Promise<Student | null>;\n  findByEmail(email: string): Promise<Student | null>;\n}\n",
+          "position": "1:20",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmj9v7q8-nzmr",
+      "title": "Edit student-repository.interface 5",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/domain/repositories/student-repository.interface.ts",
+          "content": "import type { Student } from \"@academic/students/domain/models/student.entity\";\n\nexport const STUDENT_REPOSITORY = Symbol(\"STUDENT_REPOSITORY\");\n\nexport interface StudentRepository {\n  create(student: Student): Promise<void>;\n  update(student: Student): Promise<void>;\n  delete(id: string): Promise<void>;\n  findAll(): Promise<Student[]>;\n  findById(id: string): Promise<Student | null>;\n  findByEmail(email: string): Promise<Student | null>;\n}\n",
+          "position": "1:20",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmicsq8v-z6c9",
+      "title": "Open student.schema",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/modules/academic/students/infra/database/schemas/student.schema.ts"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmicta7u-0mzz",
+      "title": "Edit student.schema",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/infra/database/schemas/student.schema.ts",
+          "content": "import { pgTable, text, timestamp, uuid, varchar } from \"drizzle-orm/pg-core\";\n\nexport const studentsSchema = pgTable(\"students\", {\n  id: uuid(\"id\").primaryKey().defaultRandom(),\n  name: text(\"name\").notNull(),\n  email: text(\"email\").notNull().unique(),\n  document: varchar(\"document\", { length: 20 }).notNull().unique(),\n  registration: varchar(\"registration\", { length: 20 }).notNull().unique(),\n  createdAt: timestamp(\"created_at\", { withTimezone: true }).notNull(),\n  updatedAt: timestamp(\"updated_at\", { withTimezone: true }).notNull(),\n});\n",
+          "students\", {": "id\").primaryKey().defaultRandom(),",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmicollt-9k2v",
+      "title": "Open drizzle.service",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/shared/infra/database/drizzle.service.ts"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmicowya-dod8",
+      "title": "Edit drizzle.service 1",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/shared/infra/database/drizzle.service.ts",
+          "content": "import * as schema from \"@academic/students/infra/database/schemas/student.schema\";\nimport { Injectable } from \"@nestjs/common\";\nimport { drizzle } from \"drizzle-orm/node-postgres\";\nimport { Pool } from \"pg\";\n\n@Injectable()\nexport class DrizzleService {\n  private readonly pool: Pool;\n  public readonly db;\n\n  constructor() {\n    this.pool = new Pool({\n      connectionString: process.env.DATABASE_URL,\n    });\n\n    this.db = drizzle(this.pool, { schema });\n  }\n}\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmicqian-jlpl",
+      "title": "Edit drizzle.service 2",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/shared/infra/database/drizzle.service.ts",
+          "content": "import * as schema from \"@academic/students/infra/database/schemas/student.schema\";\nimport { Injectable, type OnModuleDestroy } from \"@nestjs/common\";\nimport { drizzle } from \"drizzle-orm/node-postgres\";\nimport { Pool } from \"pg\";\n\n@Injectable()\nexport class DrizzleService implements OnModuleDestroy {\n  private readonly pool: Pool;\n  public readonly db;\n\n  constructor() {\n    this.pool = new Pool({\n      connectionString: process.env.DATABASE_URL,\n    });\n\n    this.db = drizzle(this.pool, { schema });\n  }\n\n  async onModuleDestroy() {\n    await this.pool.end();\n  }\n}\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmicrgeg-j9qk",
+      "title": "Rodar migrations",
+      "steps": [
+        {
+          "action": "focusTerminal",
+          "terminalId": "aula"
+        }
+      ]
+    },
+    {
+      "id": "scene-mmiebx32-p3bv",
+      "title": "Open drizzle-student.repository",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/modules/academic/students/infra/repositories/drizzle-student.repository.ts"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmiecg75-ko2t",
+      "title": "Edit drizzle-student.repository 1",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/infra/repositories/drizzle-student.repository.ts",
+          "content": "import type { StudentRepository } from \"@academic/students/domain/repositories/student-repository.interface\";\nimport { DrizzleService } from \"@infra/database/drizzle.service\";\nimport { Injectable } from \"@nestjs/common\";\n\n@Injectable()\nexport class DrizzleStudentRepository implements StudentRepository {\n  constructor(private readonly drizzleService: DrizzleService) {}\n}",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmiedmzz-u0pg",
+      "title": "Edit drizzle-student.repository 2",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/infra/repositories/drizzle-student.repository.ts",
+          "content": "import { Student } from \"@academic/students/domain/models/student.entity\";\nimport type { StudentRepository } from \"@academic/students/domain/repositories/student-repository.interface\";\nimport { DrizzleService } from \"@infra/database/drizzle.service\";\nimport { Injectable } from \"@nestjs/common\";\n\n@Injectable()\nexport class DrizzleStudentRepository implements StudentRepository {\n  constructor(private readonly drizzleService: DrizzleService) {}\n\n  async create(student: Student): Promise<void> {}\n\n  async update(student: Student): Promise<void> {}\n\n  async delete(id: string): Promise<void> {}\n\n  async findById(id: string): Promise<Student | null> {\n    return null;\n  }\n\n  async findByEmail(email: string): Promise<Student | null> {\n    return null\n  }\n\n  async findAll(): Promise<Student[]> {\n    return [];\n  }\n}",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmiefjvx-tf9k",
+      "title": "Edit drizzle-student.repository 3",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/infra/repositories/drizzle-student.repository.ts",
+          "content": "import { Student } from \"@academic/students/domain/models/student.entity\";\nimport type { StudentRepository } from \"@academic/students/domain/repositories/student-repository.interface\";\nimport { DrizzleService } from \"@infra/database/drizzle.service\";\nimport { Injectable } from \"@nestjs/common\";\nimport { studentsSchema } from \"../database/schemas/student.schema\";\n\n@Injectable()\nexport class DrizzleStudentRepository implements StudentRepository {\n  constructor(private readonly drizzleService: DrizzleService) {}\n\n  async create(student: Student): Promise<void> {}\n\n  async update(student: Student): Promise<void> {}\n\n  async delete(id: string): Promise<void> {}\n\n  async findById(id: string): Promise<Student | null> {\n    return null;\n  }\n\n  async findByEmail(email: string): Promise<Student | null> {\n    return null\n  }\n\n  async findAll(): Promise<Student[]> {\n    const rows = await this.drizzleService.db.select().from(studentsSchema);\n    return rows.map((row) => Student.restore(row)!);\n  }\n}",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmieirh2-k3eo",
+      "title": "Edit drizzle-student.repository 4",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/infra/repositories/drizzle-student.repository.ts",
+          "content": "import { Student } from \"@academic/students/domain/models/student.entity\";\nimport type { StudentRepository } from \"@academic/students/domain/repositories/student-repository.interface\";\nimport { DrizzleService } from \"@infra/database/drizzle.service\";\nimport { Injectable } from \"@nestjs/common\";\nimport { eq } from \"drizzle-orm\";\nimport { studentsSchema } from \"../database/schemas/student.schema\";\n\n@Injectable()\nexport class DrizzleStudentRepository implements StudentRepository {\n  constructor(private readonly drizzleService: DrizzleService) {}\n\n  async create(student: Student): Promise<void> {}\n\n  async update(student: Student): Promise<void> {}\n\n  async delete(id: string): Promise<void> {}\n\n  async findById(id: string): Promise<Student | null> {\n    return null;\n  }\n\n  async findByEmail(email: string): Promise<Student | null> {\n    const result = await this.drizzleService.db\n      .select()\n      .from(studentsSchema)\n      .where(eq(studentsSchema.email, email.toLowerCase()))\n      .limit(1);\n\n    return Student.restore(result[0]);\n  }\n\n  async findAll(): Promise<Student[]> {\n    const rows = await this.drizzleService.db.select().from(studentsSchema);\n    return rows.map((row) => Student.restore(row)!);\n  }\n}",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmiejmqb-8rw5",
+      "title": "Edit drizzle-student.repository 5",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/infra/repositories/drizzle-student.repository.ts",
+          "content": "import { Student } from \"@academic/students/domain/models/student.entity\";\nimport type { StudentRepository } from \"@academic/students/domain/repositories/student-repository.interface\";\nimport { DrizzleService } from \"@infra/database/drizzle.service\";\nimport { Injectable } from \"@nestjs/common\";\nimport { eq } from \"drizzle-orm\";\nimport { studentsSchema } from \"../database/schemas/student.schema\";\n\n@Injectable()\nexport class DrizzleStudentRepository implements StudentRepository {\n  constructor(private readonly drizzleService: DrizzleService) {}\n\n  async create(student: Student): Promise<void> {}\n\n  async update(student: Student): Promise<void> {}\n\n  async delete(id: string): Promise<void> {}\n\n  async findById(id: string): Promise<Student | null> {\n    const result = await this.drizzleService.db\n      .select()\n      .from(studentsSchema)\n      .where(eq(studentsSchema.id, id))\n      .limit(1);\n\n    return Student.restore(result[0]);\n  }\n\n  async findByEmail(email: string): Promise<Student | null> {\n    const result = await this.drizzleService.db\n      .select()\n      .from(studentsSchema)\n      .where(eq(studentsSchema.email, email.toLowerCase()))\n      .limit(1);\n\n    return Student.restore(result[0]);\n  }\n\n  async findAll(): Promise<Student[]> {\n    const rows = await this.drizzleService.db.select().from(studentsSchema);\n    return rows.map((row) => Student.restore(row)!);\n  }\n}",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmiek6j2-kn9t",
+      "title": "Edit drizzle-student.repository 6",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/infra/repositories/drizzle-student.repository.ts",
+          "content": "import { Student } from \"@academic/students/domain/models/student.entity\";\nimport type { StudentRepository } from \"@academic/students/domain/repositories/student-repository.interface\";\nimport { DrizzleService } from \"@infra/database/drizzle.service\";\nimport { Injectable } from \"@nestjs/common\";\nimport { eq } from \"drizzle-orm\";\nimport { studentsSchema } from \"../database/schemas/student.schema\";\n\n@Injectable()\nexport class DrizzleStudentRepository implements StudentRepository {\n  constructor(private readonly drizzleService: DrizzleService) {}\n\n  async create(student: Student): Promise<void> {\n    await this.drizzleService.db.insert(studentsSchema).values({\n      name: student.name,\n      email: student.email,\n      document: student.document,\n      registration: student.registration,\n      createdAt: new Date(),\n      updatedAt: new Date(),\n    });\n  }\n\n  async update(student: Student): Promise<void> {}\n\n  async delete(id: string): Promise<void> {}\n\n  async findById(id: string): Promise<Student | null> {\n    const result = await this.drizzleService.db\n      .select()\n      .from(studentsSchema)\n      .where(eq(studentsSchema.id, id))\n      .limit(1);\n\n    return Student.restore(result[0]);\n  }\n\n  async findByEmail(email: string): Promise<Student | null> {\n    const result = await this.drizzleService.db\n      .select()\n      .from(studentsSchema)\n      .where(eq(studentsSchema.email, email.toLowerCase()))\n      .limit(1);\n\n    return Student.restore(result[0]);\n  }\n\n  async findAll(): Promise<Student[]> {\n    const rows = await this.drizzleService.db.select().from(studentsSchema);\n    return rows.map((row) => Student.restore(row)!);\n  }\n}",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmieks1k-7gxy",
+      "title": "Edit drizzle-student.repository 7",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/infra/repositories/drizzle-student.repository.ts",
+          "content": "import { Student } from \"@academic/students/domain/models/student.entity\";\nimport type { StudentRepository } from \"@academic/students/domain/repositories/student-repository.interface\";\nimport { DrizzleService } from \"@infra/database/drizzle.service\";\nimport { Injectable } from \"@nestjs/common\";\nimport { eq } from \"drizzle-orm\";\nimport { studentsSchema } from \"../database/schemas/student.schema\";\n\n@Injectable()\nexport class DrizzleStudentRepository implements StudentRepository {\n  constructor(private readonly drizzleService: DrizzleService) {}\n\n  async create(student: Student): Promise<void> {\n    await this.drizzleService.db.insert(studentsSchema).values({\n      name: student.name,\n      email: student.email,\n      document: student.document,\n      registration: student.registration,\n      createdAt: new Date(),\n      updatedAt: new Date(),\n    });\n  }\n\n  async update(student: Student): Promise<void> {\n    await this.drizzleService.db\n      .update(studentsSchema)\n      .set({\n        name: student.name,\n        email: student.email,\n        document: student.document,\n        registration: student.registration,\n        updatedAt: new Date(),\n      })\n      .where(eq(studentsSchema.id, student.id!));\n  }\n\n  async delete(id: string): Promise<void> {}\n\n  async findById(id: string): Promise<Student | null> {\n    const result = await this.drizzleService.db\n      .select()\n      .from(studentsSchema)\n      .where(eq(studentsSchema.id, id))\n      .limit(1);\n\n    return Student.restore(result[0]);\n  }\n\n  async findByEmail(email: string): Promise<Student | null> {\n    const result = await this.drizzleService.db\n      .select()\n      .from(studentsSchema)\n      .where(eq(studentsSchema.email, email.toLowerCase()))\n      .limit(1);\n\n    return Student.restore(result[0]);\n  }\n\n  async findAll(): Promise<Student[]> {\n    const rows = await this.drizzleService.db.select().from(studentsSchema);\n    return rows.map((row) => Student.restore(row)!);\n  }\n}",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmielav5-ur0e",
+      "title": "Edit drizzle-student.repository 8",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/infra/repositories/drizzle-student.repository.ts",
+          "content": "import { Student } from \"@academic/students/domain/models/student.entity\";\nimport type { StudentRepository } from \"@academic/students/domain/repositories/student-repository.interface\";\nimport { DrizzleService } from \"@infra/database/drizzle.service\";\nimport { Injectable } from \"@nestjs/common\";\nimport { eq } from \"drizzle-orm\";\nimport { studentsSchema } from \"../database/schemas/student.schema\";\n\n@Injectable()\nexport class DrizzleStudentRepository implements StudentRepository {\n  constructor(private readonly drizzleService: DrizzleService) {}\n\n  async create(student: Student): Promise<void> {\n    await this.drizzleService.db.insert(studentsSchema).values({\n      name: student.name,\n      email: student.email,\n      document: student.document,\n      registration: student.registration,\n      createdAt: new Date(),\n      updatedAt: new Date(),\n    });\n  }\n\n  async update(student: Student): Promise<void> {\n    await this.drizzleService.db\n      .update(studentsSchema)\n      .set({\n        name: student.name,\n        email: student.email,\n        document: student.document,\n        registration: student.registration,\n        updatedAt: new Date(),\n      })\n      .where(eq(studentsSchema.id, student.id!));\n  }\n\n  async delete(id: string): Promise<void> {\n    await this.drizzleService.db\n      .delete(studentsSchema)\n      .where(eq(studentsSchema.id, id));\n  }\n\n  async findById(id: string): Promise<Student | null> {\n    const result = await this.drizzleService.db\n      .select()\n      .from(studentsSchema)\n      .where(eq(studentsSchema.id, id))\n      .limit(1);\n\n    return Student.restore(result[0]);\n  }\n\n  async findByEmail(email: string): Promise<Student | null> {\n    const result = await this.drizzleService.db\n      .select()\n      .from(studentsSchema)\n      .where(eq(studentsSchema.email, email.toLowerCase()))\n      .limit(1);\n\n    return Student.restore(result[0]);\n  }\n\n  async findAll(): Promise<Student[]> {\n    const rows = await this.drizzleService.db.select().from(studentsSchema);\n    return rows.map((row) => Student.restore(row)!);\n  }\n}",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmiclhr2-hjwa",
+      "title": "Open student.dto",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/modules/academic/students/application/dto/student.dto.ts"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmiclv2g-sxmg",
+      "title": "Edit student.dto 1",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/application/dto/student.dto.ts",
+          "content": "export class StudentDto {\n  private constructor(\n    public name: string,\n    public email: string,\n    public document: string,\n    public registration: string,\n  ) {}\n}",
+          "position": "1:20",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmicmv75-ogs0",
+      "title": "Edit student.dto 2",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/application/dto/student.dto.ts",
+          "content": "import type { Student } from \"@academic/students/domain/models/student.entity\";\n\nexport class StudentDto {\n  private constructor(\n    public name: string,\n    public email: string,\n    public document: string,\n    public registration: string,\n  ) {}\n\n  public static fromStudent(student: Student | null): StudentDto | null {\n    if (!student) return null;\n    return new StudentDto(\n      student.name,\n      student.email,\n      student.document,\n      student.registration,\n    );\n  }\n}\n",
+          "position": "1:20",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmiemgag-73xk",
+      "title": "Open list-students.service",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/modules/academic/students/application/services/list-students.service.ts"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmiemwfh-eqqd",
+      "title": "Edit list-students.service 1",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/application/services/list-students.service.ts",
+          "content": "import {\n  STUDENT_REPOSITORY,\n  type StudentRepository,\n} from \"@academic/students/domain/repositories/student-repository.interface\";\nimport { Inject, Injectable } from \"@nestjs/common\";\n\n@Injectable()\nexport class ListStudentsService {\n  constructor(\n    @Inject(STUDENT_REPOSITORY)\n    private readonly studentRepository: StudentRepository,\n  ) {}\n}\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmja8tjj-adga",
+      "title": "Edit list-students.service 2",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/application/services/list-students.service.ts",
+          "content": "import { StudentDto } from \"@academic/students/application/dto/student.dto\";\nimport {\n  STUDENT_REPOSITORY,\n  type StudentRepository,\n} from \"@academic/students/domain/repositories/student-repository.interface\";\nimport { Inject, Injectable } from \"@nestjs/common\";\n\n@Injectable()\nexport class ListStudentsService {\n  constructor(\n    @Inject(STUDENT_REPOSITORY)\n    private readonly studentRepository: StudentRepository,\n  ) {}\n\n  async execute(): Promise<StudentDto[]> {\n    const response = await this.studentRepository.findAll();\n    return response.map((row) => StudentDto.fromStudent(row)!);\n  }\n}\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmieo86v-nbal",
+      "title": "Open return-student.service",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/modules/academic/students/application/services/return-student.service.ts"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmieokd9-avmw",
+      "title": "Edit return-student.service 1",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/application/services/return-student.service.ts",
+          "content": "import {\n  STUDENT_REPOSITORY,\n  type StudentRepository,\n} from \"@academic/students/domain/repositories/student-repository.interface\";\nimport { Inject, Injectable } from \"@nestjs/common\";\n\n@Injectable()\nexport class ReturnStudentService {\n  constructor(\n    @Inject(STUDENT_REPOSITORY)\n    private readonly studentRepository: StudentRepository,\n  ) {}\n}\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmieph2r-bgre",
+      "title": "Edit return-student.service 2",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/application/services/return-student.service.ts",
+          "content": "import { StudentDto } from \"@academic/students/application/dto/student.dto\";\nimport {\n  STUDENT_REPOSITORY,\n  type StudentRepository,\n} from \"@academic/students/domain/repositories/student-repository.interface\";\nimport { Inject, Injectable } from \"@nestjs/common\";\n\n@Injectable()\nexport class ReturnStudentService {\n  constructor(\n    @Inject(STUDENT_REPOSITORY)\n    private readonly studentRepository: StudentRepository,\n  ) {}\n\n  async executeById(id: string): Promise<StudentDto | null> {\n    const response = await this.studentRepository.findById(id);\n    return StudentDto.fromStudent(response);\n  }\n}\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmiepug8-bxtr",
+      "title": "Edit return-student.service 3",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/application/services/return-student.service.ts",
+          "content": "import { StudentDto } from \"@academic/students/application/dto/student.dto\";\nimport {\n  STUDENT_REPOSITORY,\n  type StudentRepository,\n} from \"@academic/students/domain/repositories/student-repository.interface\";\nimport { Inject, Injectable } from \"@nestjs/common\";\n\n@Injectable()\nexport class ReturnStudentService {\n  constructor(\n    @Inject(STUDENT_REPOSITORY)\n    private readonly studentRepository: StudentRepository,\n  ) {}\n\n  async executeById(id: string): Promise<StudentDto | null> {\n    const response = await this.studentRepository.findById(id);\n    return StudentDto.fromStudent(response);\n  }\n\n  async executeByEmail(email: string): Promise<StudentDto | null> {\n    const response = await this.studentRepository.findByEmail(email);\n    return StudentDto.fromStudent(response);\n  }\n}\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmj89g16-nd0j",
+      "title": "Open create-student.service",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/modules/academic/students/application/services/create-student.service.ts"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmj8a3ix-2pns",
+      "title": "Edit create-student.service 1",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/application/services/create-student.service.ts",
+          "content": "import {\n  STUDENT_REPOSITORY,\n  type StudentRepository,\n} from \"@academic/students/domain/repositories/student-repository.interface\";\nimport { Inject, Injectable } from \"@nestjs/common\";\n\n@Injectable()\nexport class CreateStudentService {\n  constructor(\n    @Inject(STUDENT_REPOSITORY)\n    private readonly studentRepository: StudentRepository,\n  ) {}\n}\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmj8b0ig-1dyy",
+      "title": "Edit create-student.service 2",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/application/services/create-student.service.ts",
+          "content": "import type { StudentDto } from \"@academic/students/application/dto/student.dto\";\nimport {\n  STUDENT_REPOSITORY,\n  type StudentRepository,\n} from \"@academic/students/domain/repositories/student-repository.interface\";\nimport { Inject, Injectable } from \"@nestjs/common\";\n\n@Injectable()\nexport class CreateStudentService {\n  constructor(\n    @Inject(STUDENT_REPOSITORY)\n    private readonly studentRepository: StudentRepository,\n  ) {}\n\n  async execute(dto: StudentDto): Promise<void> {\n\n  }\n}\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmjabdsp-wu4c",
+      "title": "Edit create-student.service 3",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/application/services/create-student.service.ts",
+          "content": "import type { StudentDto } from \"@academic/students/application/dto/student.dto\";\nimport {\n  STUDENT_REPOSITORY,\n  type StudentRepository,\n} from \"@academic/students/domain/repositories/student-repository.interface\";\nimport { Inject, Injectable } from \"@nestjs/common\";\n\n@Injectable()\nexport class CreateStudentService {\n  constructor(\n    @Inject(STUDENT_REPOSITORY)\n    private readonly studentRepository: StudentRepository,\n  ) {}\n\n  async execute(dto: StudentDto): Promise<void> {\n    const existing = await this.studentRepository.findByEmail(dto.email);\n\n  }\n}\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmjabr5t-j4q1",
+      "title": "Edit create-student.service 4",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/application/services/create-student.service.ts",
+          "content": "import type { StudentDto } from \"@academic/students/application/dto/student.dto\";\nimport {\n  STUDENT_REPOSITORY,\n  type StudentRepository,\n} from \"@academic/students/domain/repositories/student-repository.interface\";\nimport { ConflictException, Inject, Injectable } from \"@nestjs/common\";\n\n@Injectable()\nexport class CreateStudentService {\n  constructor(\n    @Inject(STUDENT_REPOSITORY)\n    private readonly studentRepository: StudentRepository,\n  ) {}\n\n  async execute(dto: StudentDto): Promise<void> {\n    const existing = await this.studentRepository.findByEmail(dto.email);\n\n    if (existing) {\n      throw new ConflictException(\"Email already registered\");\n    }\n  }\n}\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmj8bg7r-fd7t",
+      "title": "Edit create-student.service 5",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/application/services/create-student.service.ts",
+          "content": "import type { StudentDto } from \"@academic/students/application/dto/student.dto\";\nimport { Student } from \"@academic/students/domain/models/student.entity\";\nimport {\n  STUDENT_REPOSITORY,\n  type StudentRepository,\n} from \"@academic/students/domain/repositories/student-repository.interface\";\nimport { ConflictException, Inject, Injectable } from \"@nestjs/common\";\n\n@Injectable()\nexport class CreateStudentService {\n  constructor(\n    @Inject(STUDENT_REPOSITORY)\n    private readonly studentRepository: StudentRepository,\n  ) {}\n\n  async execute(dto: StudentDto): Promise<void> {\n    const existing = await this.studentRepository.findByEmail(dto.email);\n\n    if (existing) {\n      throw new ConflictException(\"Email already registered\");\n    }\n\n    const student = Student.restore(dto);\n    await this.studentRepository.create(student!);\n  }\n}\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmj8btv7-6zix",
+      "title": "Open edit-student.service",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/modules/academic/students/application/services/edit-student.service.ts"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmj8cgh4-6sgh",
+      "title": "Edit edit-student.service 1",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/application/services/edit-student.service.ts",
+          "content": "import type { StudentDto } from \"@academic/students/application/dto/student.dto\";\nimport {\n  STUDENT_REPOSITORY,\n  type StudentRepository,\n} from \"@academic/students/domain/repositories/student-repository.interface\";\nimport {\n  Inject,\n  Injectable,\n} from \"@nestjs/common\";\n\n@Injectable()\nexport class EditStudentService {\n  constructor(\n    @Inject(STUDENT_REPOSITORY)\n    private readonly studentRepository: StudentRepository,\n  ) {}\n\n  async execute(id: string, dto: StudentDto): Promise<void> {\n\n  }\n}\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmj8d429-dx7p",
+      "title": "Edit edit-student.service 2",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/application/services/edit-student.service.ts",
+          "content": "import type { StudentDto } from \"@academic/students/application/dto/student.dto\";\nimport {\n  STUDENT_REPOSITORY,\n  type StudentRepository,\n} from \"@academic/students/domain/repositories/student-repository.interface\";\nimport {\n  Inject,\n  Injectable,\n  NotFoundException,\n} from \"@nestjs/common\";\n\n@Injectable()\nexport class EditStudentService {\n  constructor(\n    @Inject(STUDENT_REPOSITORY)\n    private readonly studentRepository: StudentRepository,\n  ) {}\n\n  async execute(id: string, dto: StudentDto): Promise<void> {\n    const student = await this.studentRepository.findById(id);\n\n    if (!student) {\n      throw new NotFoundException(\"Student not found\");\n    }\n  }\n}\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmj8dnfx-3xrj",
+      "title": "Edit edit-student.service 3",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/application/services/edit-student.service.ts",
+          "content": "import type { StudentDto } from \"@academic/students/application/dto/student.dto\";\nimport {\n  STUDENT_REPOSITORY,\n  type StudentRepository,\n} from \"@academic/students/domain/repositories/student-repository.interface\";\nimport {\n  ConflictException,\n  Inject,\n  Injectable,\n  NotFoundException,\n} from \"@nestjs/common\";\n\n@Injectable()\nexport class EditStudentService {\n  constructor(\n    @Inject(STUDENT_REPOSITORY)\n    private readonly studentRepository: StudentRepository,\n  ) {}\n\n  async execute(id: string, dto: StudentDto): Promise<void> {\n    const student = await this.studentRepository.findById(id);\n\n    if (!student) {\n      throw new NotFoundException(\"Student not found\");\n    }\n\n    if (dto.email && dto.email !== student.email) {\n      const existing = await this.studentRepository.findByEmail(dto.email);\n\n      if (existing) {\n        throw new ConflictException(\"Email already registered\");\n      }\n    }\n  }\n}\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmj8e1ss-byg9",
+      "title": "Edit edit-student.service 4",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/application/services/edit-student.service.ts",
+          "content": "import type { StudentDto } from \"@academic/students/application/dto/student.dto\";\nimport {\n  STUDENT_REPOSITORY,\n  type StudentRepository,\n} from \"@academic/students/domain/repositories/student-repository.interface\";\nimport {\n  ConflictException,\n  Inject,\n  Injectable,\n  NotFoundException,\n} from \"@nestjs/common\";\n\n@Injectable()\nexport class EditStudentService {\n  constructor(\n    @Inject(STUDENT_REPOSITORY)\n    private readonly studentRepository: StudentRepository,\n  ) {}\n\n  async execute(id: string, dto: StudentDto): Promise<void> {\n    const student = await this.studentRepository.findById(id);\n\n    if (!student) {\n      throw new NotFoundException(\"Student not found\");\n    }\n\n    if (dto.email && dto.email !== student.email) {\n      const existing = await this.studentRepository.findByEmail(dto.email);\n\n      if (existing) {\n        throw new ConflictException(\"Email already registered\");\n      }\n    }\n\n    student.withName(dto.name).withEmail(dto.email).withDocument(dto.document);\n  }\n}\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmj8eki6-cvqy",
+      "title": "Edit edit-student.service 5",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/application/services/edit-student.service.ts",
+          "content": "import type { StudentDto } from \"@academic/students/application/dto/student.dto\";\nimport {\n  STUDENT_REPOSITORY,\n  type StudentRepository,\n} from \"@academic/students/domain/repositories/student-repository.interface\";\nimport {\n  ConflictException,\n  Inject,\n  Injectable,\n  NotFoundException,\n} from \"@nestjs/common\";\n\n@Injectable()\nexport class EditStudentService {\n  constructor(\n    @Inject(STUDENT_REPOSITORY)\n    private readonly studentRepository: StudentRepository,\n  ) {}\n\n  async execute(id: string, dto: StudentDto): Promise<void> {\n    const student = await this.studentRepository.findById(id);\n\n    if (!student) {\n      throw new NotFoundException(\"Student not found\");\n    }\n\n    if (dto.email && dto.email !== student.email) {\n      const existing = await this.studentRepository.findByEmail(dto.email);\n\n      if (existing) {\n        throw new ConflictException(\"Email already registered\");\n      }\n    }\n\n    student.withName(dto.name).withEmail(dto.email).withDocument(dto.document);\n    await this.studentRepository.update(student!);\n  }\n}\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmj8ey1i-izbd",
+      "title": "Open remove-student.service",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/modules/academic/students/application/services/remove-student.service.ts"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmj8fo2e-9318",
+      "title": "Edit remove-student.service 1",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/application/services/remove-student.service.ts",
+          "content": "import {\n  STUDENT_REPOSITORY,\n  type StudentRepository,\n} from \"@academic/students/domain/repositories/student-repository.interface\";\nimport { Inject, Injectable } from \"@nestjs/common\";\n\n@Injectable()\nexport class RemoveStudentService {\n  constructor(\n    @Inject(STUDENT_REPOSITORY)\n    private readonly studentRepository: StudentRepository,\n  ) {}\n}\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmj8gebf-og9k",
+      "title": "Edit remove-student.service 2",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/application/services/remove-student.service.ts",
+          "content": "import {\n  STUDENT_REPOSITORY,\n  type StudentRepository,\n} from \"@academic/students/domain/repositories/student-repository.interface\";\nimport { Inject, Injectable } from \"@nestjs/common\";\n\n@Injectable()\nexport class RemoveStudentService {\n  constructor(\n    @Inject(STUDENT_REPOSITORY)\n    private readonly studentRepository: StudentRepository,\n  ) {}\n\n  async execute(id: string): Promise<void> {\n    await this.studentRepository.delete(id);\n  }\n}\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmierd1n-yj55",
+      "title": "Open students.module",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/modules/academic/students/students.module.ts"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmiersae-56vz",
+      "title": "Edit students.module",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/students.module.ts",
+          "content": "import { CreateStudentService } from \"@academic/students/application/services/create-student.service\";\nimport { EditStudentService } from \"@academic/students/application/services/edit-student.service\";\nimport { ListStudentsService } from \"@academic/students/application/services/list-students.service\";\nimport { RemoveStudentService } from \"@academic/students/application/services/remove-student.service\";\nimport { ReturnStudentService } from \"@academic/students/application/services/return-student.service\";\nimport { STUDENT_REPOSITORY } from \"@academic/students/domain/repositories/student-repository.interface\";\nimport { StudentsController } from \"@academic/students/infra/controllers/students.controller\";\nimport { DrizzleStudentRepository } from \"@academic/students/infra/repositories/drizzle-student.repository\";\nimport { DatabaseModule } from \"@infra/database/database.module\";\nimport { Module } from \"@nestjs/common\";\n\n@Module({\n  imports: [DatabaseModule],\n  controllers: [StudentsController],\n  providers: [\n    CreateStudentService,\n    EditStudentService,\n    ListStudentsService,\n    ReturnStudentService,\n    RemoveStudentService,\n    DrizzleStudentRepository,\n    {\n      provide: STUDENT_REPOSITORY,\n      useExisting: DrizzleStudentRepository,\n    },\n  ],\n})\nexport class StudentsModule {}\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmjd0le2-7mus",
+      "title": "Open database.module",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/shared/infra/database/database.module.ts"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmjd14bb-p263",
+      "title": "Edit database.module",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/shared/infra/database/database.module.ts",
+          "content": "import { Module } from \"@nestjs/common\";\nimport { DrizzleService } from \"./drizzle.service\";\n\n@Module({\n  providers: [DrizzleService],\n  exports: [DrizzleService],\n})\nexport class DatabaseModule {}\n",
+          "position": "1:50",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmieskzb-rai4",
+      "title": "Open students.controller",
+      "steps": [
+        {
+          "action": "open",
+          "path": "src/modules/academic/students/infra/controllers/students.controller.ts"
+        }
+      ]
+    },
+    {
+      "id": "demo-mmieswwt-j43f",
+      "title": "Edit students.controller 1",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/infra/controllers/students.controller.ts",
+          "content": "import { Controller } from \"@nestjs/common\";\n\n@Controller(\"students\")\nexport class StudentsController {\n  constructor() {}\n}\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmietx0o-oz36",
+      "title": "Edit students.controller 2",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/infra/controllers/students.controller.ts",
+          "content": "import { ListStudentsService } from \"@academic/students/application/services/list-students.service\";\nimport { Controller, Get } from \"@nestjs/common\";\n\n@Controller(\"students\")\nexport class StudentsController {\n  constructor(private readonly listStudentsService: ListStudentsService) {}\n\n  @Get()\n  async findAll() {\n    return this.listStudentsService.execute();\n  }\n}\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmieuih3-c8qr",
+      "title": "Edit students.controller 3",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/infra/controllers/students.controller.ts",
+          "content": "import { ListStudentsService } from \"@academic/students/application/services/list-students.service\";\nimport { ReturnStudentService } from \"@academic/students/application/services/return-student.service\";\nimport { Controller, Get, Param } from \"@nestjs/common\";\n\n@Controller(\"students\")\nexport class StudentsController {\n  constructor(\n    private readonly listStudentsService: ListStudentsService,\n    private readonly returnStudentService: ReturnStudentService,\n  ) {}\n\n  @Get()\n  async findAll() {\n    return this.listStudentsService.execute();\n  }\n\n  @Get(\":id\")\n  async findById(@Param(\"id\") id: string) {\n    return this.returnStudentService.executeById(id);\n  }\n}\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmiev8n5-3j7t",
+      "title": "Edit students.controller 4",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/infra/controllers/students.controller.ts",
+          "content": "import { StudentDto } from \"@academic/students/application/dto/student.dto\";\nimport { CreateStudentService } from \"@academic/students/application/services/create-student.service\";\nimport { ListStudentsService } from \"@academic/students/application/services/list-students.service\";\nimport { ReturnStudentService } from \"@academic/students/application/services/return-student.service\";\nimport { Body, Controller, Get, Param, Post } from \"@nestjs/common\";\n\n@Controller(\"students\")\nexport class StudentsController {\n  constructor(\n    private readonly createStudentService: CreateStudentService,\n    private readonly listStudentsService: ListStudentsService,\n    private readonly returnStudentService: ReturnStudentService,\n  ) {}\n\n  @Get()\n  async findAll() {\n    return this.listStudentsService.execute();\n  }\n\n  @Get(\":id\")\n  async findById(@Param(\"id\") id: string) {\n    return this.returnStudentService.executeById(id);\n  }\n\n  @Post()\n  async create(@Body() body: StudentDto) {\n    return this.createStudentService.execute(body);\n  }\n}\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmiew1rv-vz4k",
+      "title": "Edit students.controller 5",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/infra/controllers/students.controller.ts",
+          "content": "import { StudentDto } from \"@academic/students/application/dto/student.dto\";\nimport { CreateStudentService } from \"@academic/students/application/services/create-student.service\";\nimport { EditStudentService } from \"@academic/students/application/services/edit-student.service\";\nimport { ListStudentsService } from \"@academic/students/application/services/list-students.service\";\nimport { ReturnStudentService } from \"@academic/students/application/services/return-student.service\";\nimport { Body, Controller, Get, Param, Post, Put } from \"@nestjs/common\";\n\n@Controller(\"students\")\nexport class StudentsController {\n  constructor(\n    private readonly createStudentService: CreateStudentService,\n    private readonly editStudentService: EditStudentService,\n    private readonly listStudentsService: ListStudentsService,\n    private readonly returnStudentService: ReturnStudentService,\n  ) {}\n\n  @Get()\n  async findAll() {\n    return this.listStudentsService.execute();\n  }\n\n  @Get(\":id\")\n  async findById(@Param(\"id\") id: string) {\n    return this.returnStudentService.executeById(id);\n  }\n\n  @Post()\n  async create(@Body() body: StudentDto) {\n    return this.createStudentService.execute(body);\n  }\n\n  @Put(\":id\")\n  async update(@Param(\"id\") id: string, @Body() body: StudentDto) {\n    return this.editStudentService.execute(id, body);\n  }\n}\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    },
+    {
+      "id": "demo-mmjamh3r-1o19",
+      "title": "Edit students.controller 6",
+      "steps": [
+        {
+          "action": "replace",
+          "path": "src/modules/academic/students/infra/controllers/students.controller.ts",
+          "content": "import { StudentDto } from \"@academic/students/application/dto/student.dto\";\nimport { CreateStudentService } from \"@academic/students/application/services/create-student.service\";\nimport { EditStudentService } from \"@academic/students/application/services/edit-student.service\";\nimport { ListStudentsService } from \"@academic/students/application/services/list-students.service\";\nimport { RemoveStudentService } from \"@academic/students/application/services/remove-student.service\";\nimport { ReturnStudentService } from \"@academic/students/application/services/return-student.service\";\nimport {\n  Body,\n  Controller,\n  Delete,\n  Get,\n  Param,\n  Post,\n  Put,\n} from \"@nestjs/common\";\n\n@Controller(\"students\")\nexport class StudentsController {\n  constructor(\n    private readonly createStudentService: CreateStudentService,\n    private readonly editStudentService: EditStudentService,\n    private readonly listStudentService: ListStudentsService,\n    private readonly returnStudentService: ReturnStudentService,\n    private readonly removeStudentService: RemoveStudentService,\n  ) {}\n\n  @Get()\n  async findAll() {\n    return this.listStudentService.execute();\n  }\n\n  @Get(\":id\")\n  async findById(@Param(\"id\") id: string) {\n    return this.returnStudentService.executeById(id);\n  }\n\n  @Post()\n  async create(@Body() body: StudentDto) {\n    return this.createStudentService.execute(body);\n  }\n\n  @Put(\":id\")\n  async update(@Param(\"id\") id: string, @Body() body: StudentDto) {\n    return this.editStudentService.execute(id, body);\n  }\n\n  @Delete(\":id\")\n  async remove(@Param(\"id\") id: string) {\n    return this.removeStudentService.execute(id);\n  }\n}\n",
+          "position": "1:100",
+          "highlightWholeLine": true
+        }
+      ]
+    }
+  ]
+}
