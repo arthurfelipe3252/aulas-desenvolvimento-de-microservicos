@@ -1,4 +1,4 @@
-import type { Student } from "@academic/students/domain/models/student.entity";
+import type { Student } from "@modules/students/domain/models/student.entity";
 
 export const STUDENT_REPOSITORY = Symbol("STUDENT_REPOSITORY");
 

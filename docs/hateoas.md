@@ -203,8 +203,8 @@ export * from "./hateoas-list.decorator";
 ### Controller
 
 ```typescript
-import { StudentDto } from "@academic/students/application/dto/student.dto";
-import { StudentService } from "@academic/students/application/services/student.service";
+import { StudentDto } from "@modules/students/application/dto/student.dto";
+import { StudentService } from "@modules/students/application/services/student.service";
 import {
   Body,
   Controller,

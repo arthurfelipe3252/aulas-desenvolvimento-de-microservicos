@@ -9,7 +9,12 @@
       "Bash(npm run *)",
       "Bash(docker compose *)",
       "Bash(docker rm *)",
-      "Bash(docker exec *)"
+      "Bash(docker exec *)",
+      "Bash(git -C \"C:\\\\E.S\\\\Quinto semestre\\\\microsserviços\\\\aulas-desenvolvimento-de-microservicos\" ls-files dist/)",
+      "Bash(node -e ' *)",
+      "Bash(MSYS_NO_PATHCONV=1 docker exec school-control-mq *)",
+      "Bash(netstat -ano)",
+      "Bash(curl -s -u school:school123 http://localhost:15673/api/exchanges/%2F)"
     ]
   }
 }

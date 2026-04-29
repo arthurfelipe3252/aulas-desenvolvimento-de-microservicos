@@ -1,6 +1,6 @@
-import { Student } from "@academic/students/domain/models/student.entity";
-import type { StudentRepository } from "@academic/students/domain/repositories/student-repository.interface";
-import { studentsSchema } from "@academic/students/infra/schemas/student.schema";
+import { Student } from "@modules/students/domain/models/student.entity";
+import type { StudentRepository } from "@modules/students/domain/repositories/student-repository.interface";
+import { studentsSchema } from "@modules/students/infra/schemas/student.schema";
 import { Injectable } from "@nestjs/common";
 import { DrizzleService } from "@shared/infra/database/drizzle.service";
 import { count, eq } from "drizzle-orm";

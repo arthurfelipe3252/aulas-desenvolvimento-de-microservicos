@@ -1,11 +1,11 @@
-import { CreateStudentDto } from "@academic/students/application/dto/create-student.dto";
-import { StudentDto } from "@academic/students/application/dto/student.dto";
-import { UpdateStudentDto } from "@academic/students/application/dto/update-student.dto";
-import { Student } from "@academic/students/domain/models/student.entity";
+import { CreateStudentDto } from "@modules/students/application/dto/create-student.dto";
+import { StudentDto } from "@modules/students/application/dto/student.dto";
+import { UpdateStudentDto } from "@modules/students/application/dto/update-student.dto";
+import { Student } from "@modules/students/domain/models/student.entity";
 import {
   STUDENT_REPOSITORY,
   type StudentRepository,
-} from "@academic/students/domain/repositories/student-repository.interface";
+} from "@modules/students/domain/repositories/student-repository.interface";
 import {
   ConflictException,
   Inject,

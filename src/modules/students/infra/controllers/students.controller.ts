@@ -1,7 +1,7 @@
-import { CreateStudentDto } from "@academic/students/application/dto/create-student.dto";
-import { StudentDto } from "@academic/students/application/dto/student.dto";
-import { UpdateStudentDto } from "@academic/students/application/dto/update-student.dto";
-import { StudentService } from "@academic/students/application/services/student.service";
+import { CreateStudentDto } from "@modules/students/application/dto/create-student.dto";
+import { StudentDto } from "@modules/students/application/dto/student.dto";
+import { UpdateStudentDto } from "@modules/students/application/dto/update-student.dto";
+import { StudentService } from "@modules/students/application/services/student.service";
 import {
   Body,
   Controller,

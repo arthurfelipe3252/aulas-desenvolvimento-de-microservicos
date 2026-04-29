@@ -5,9 +5,8 @@ Você é um agente especializado em criar módulos NestJS seguindo a arquitetura
 Use a ferramenta `AskUserQuestion` para perguntar **uma de cada vez**:
 
 1. **Nome do módulo** — ex: `courses`, `grades`, `payments`
-2. **É submódulo?** — Pergunte se será submodulo de algum módulo existente. Se sim, qual módulo pai (ex: `academic`, `enrollment`, `attendance`, `class-offering`).
-3. **Entidades** — Quais entidades existirão nesse módulo? (pode ser mais de uma, ex: `Course`, `CourseCategory`)
-4. **Para cada entidade** — Quais propriedades (campos) ela terá? Para cada propriedade, pergunte o nome e o tipo TypeScript (`string`, `number`, `boolean`, `Date`, `string | null`, etc.)
+2. **Entidades** — Quais entidades existirão nesse módulo? (pode ser mais de uma, ex: `Course`, `CourseCategory`)
+3. **Para cada entidade** — Quais propriedades (campos) ela terá? Para cada propriedade, pergunte o nome e o tipo TypeScript (`string`, `number`, `boolean`, `Date`, `string | null`, etc.)
 
 Aguarde a resposta de cada pergunta antes de passar para a próxima.
 
@@ -15,14 +14,9 @@ Aguarde a resposta de cada pergunta antes de passar para a próxima.
 
 Com base nas respostas, determine:
 
-- **Caminho base do módulo**:
-  - Submódulo de `academic` → `src/modules/academic/<nome-modulo>/`
-  - Módulo raiz → `src/modules/<nome-modulo>/`
-  - Submódulo de outro módulo existente → `src/modules/<modulo-pai>/<nome-modulo>/`
+- **Caminho base do módulo**: `src/modules/<nome-modulo>/`
 
-- **Path alias** (para tsconfig.json):
-  - Se for submódulo de um módulo que já tem alias (ex: `@academic/*`), use o alias existente
-  - Se for módulo raiz novo, crie um novo alias `@<nome-modulo>/*` → `src/modules/<nome-modulo>/*`
+- **Path alias**: **não criar alias novo** — todos os módulos usam `@modules/*` (já configurado em `tsconfig.json` como `"@modules/*": ["src/modules/*"]`). Imports ficam `@modules/<nome-modulo>/...`.
 
 ## Passo 3 — Gerar os arquivos
 
@@ -93,7 +87,7 @@ export class <Entity> {
 **2. `domain/repositories/<entity>-repository.interface.ts`**
 
 ```typescript
-import type { <Entity> } from "@<alias>/<module>/domain/models/<entity>.entity";
+import type { <Entity> } from "@modules/<module>/domain/models/<entity>.entity";
 
 export const <ENTITY>_REPOSITORY = Symbol("<ENTITY>_REPOSITORY");
 
@@ -109,7 +103,7 @@ export interface <Entity>Repository {
 **3. `application/dto/<entity>.dto.ts`**
 
 ```typescript
-import type { <Entity> } from "@<alias>/<module>/domain/models/<entity>.entity";
+import type { <Entity> } from "@modules/<module>/domain/models/<entity>.entity";
 
 export class <Entity>Dto {
   private constructor(
@@ -130,12 +124,12 @@ export class <Entity>Dto {
 **4. `application/services/<entity>.service.ts`**
 
 ```typescript
-import { <Entity>Dto } from "@<alias>/<module>/application/dto/<entity>.dto";
-import { <Entity> } from "@<alias>/<module>/domain/models/<entity>.entity";
+import { <Entity>Dto } from "@modules/<module>/application/dto/<entity>.dto";
+import { <Entity> } from "@modules/<module>/domain/models/<entity>.entity";
 import {
   <ENTITY>_REPOSITORY,
   type <Entity>Repository,
-} from "@<alias>/<module>/domain/repositories/<entity>-repository.interface";
+} from "@modules/<module>/domain/repositories/<entity>-repository.interface";
 import {
   Inject,
   Injectable,
@@ -202,9 +196,9 @@ export const <entities>Schema = pgTable("<entities>", {
 **6. `infra/repositories/drizzle-<entity>.repository.ts`**
 
 ```typescript
-import { <Entity> } from "@<alias>/<module>/domain/models/<entity>.entity";
-import type { <Entity>Repository } from "@<alias>/<module>/domain/repositories/<entity>-repository.interface";
-import { <entities>Schema } from "@<alias>/<module>/infra/schemas/<entity>.schema";
+import { <Entity> } from "@modules/<module>/domain/models/<entity>.entity";
+import type { <Entity>Repository } from "@modules/<module>/domain/repositories/<entity>-repository.interface";
+import { <entities>Schema } from "@modules/<module>/infra/schemas/<entity>.schema";
 import { Injectable } from "@nestjs/common";
 import { DrizzleService } from "@shared/infra/database/drizzle.service";
 import { eq } from "drizzle-orm";
@@ -258,8 +252,8 @@ export class Drizzle<Entity>Repository implements <Entity>Repository {
 **7. `infra/controllers/<entities>.controller.ts`** (plural)
 
 ```typescript
-import { <Entity>Dto } from "@<alias>/<module>/application/dto/<entity>.dto";
-import { <Entity>Service } from "@<alias>/<module>/application/services/<entity>.service";
+import { <Entity>Dto } from "@modules/<module>/application/dto/<entity>.dto";
+import { <Entity>Service } from "@modules/<module>/application/services/<entity>.service";
 import {
   Body,
   Controller,
@@ -304,10 +298,10 @@ export class <Entities>Controller {
 **8. `<module>.module.ts`** (na raiz do módulo)
 
 ```typescript
-import { <Entity>Service } from "@<alias>/<module>/application/services/<entity>.service";
-import { <ENTITY>_REPOSITORY } from "@<alias>/<module>/domain/repositories/<entity>-repository.interface";
-import { <Entities>Controller } from "@<alias>/<module>/infra/controllers/<entities>.controller";
-import { Drizzle<Entity>Repository } from "@<alias>/<module>/infra/repositories/drizzle-<entity>.repository";
+import { <Entity>Service } from "@modules/<module>/application/services/<entity>.service";
+import { <ENTITY>_REPOSITORY } from "@modules/<module>/domain/repositories/<entity>-repository.interface";
+import { <Entities>Controller } from "@modules/<module>/infra/controllers/<entities>.controller";
+import { Drizzle<Entity>Repository } from "@modules/<module>/infra/repositories/drizzle-<entity>.repository";
 import { Module } from "@nestjs/common";
 import { SharedModule } from "@shared/shared.module";
 
@@ -332,33 +326,14 @@ Se houver **múltiplas entidades** no mesmo módulo, inclua todas no module (con
 
 ## Passo 4 — Atualizar arquivos existentes
 
-### Se for submódulo (ex: submódulo de `academic`):
-
-Edite o módulo pai para importar o novo módulo:
+Edite `src/app.module.ts` para importar o novo módulo:
 
 ```typescript
-// academic.module.ts
-import { <Module>Module } from "@academic/<module>/<module>.module";
-
-@Module({
-  imports: [StudentsModule, TeachersModule, SubjectsModule, <Module>Module],
-})
-```
-
-### Se for módulo raiz novo:
-
-1. Edite `src/app.module.ts` para importar o novo módulo:
-
-```typescript
-import { <Module>Module } from "@<module>/<module>.module";
+import { <Module>Module } from "@modules/<module>/<module>.module";
 // adicione <Module>Module ao array imports
 ```
 
-2. Edite `tsconfig.json` para adicionar o path alias:
-
-```json
-"@<module>/*": ["src/modules/<module>/*"]
-```
+Não é necessário editar `tsconfig.json` — o alias `@modules/*` já cobre o novo módulo.
 
 ---
 
