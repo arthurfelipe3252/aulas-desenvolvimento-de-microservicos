@@ -7,6 +7,7 @@ API REST para gestão escolar, construída com NestJS + Drizzle ORM + PostgreSQL
 - [Node.js](https://nodejs.org) >= 20
 - [npm](https://www.npmjs.com) >= 10
 - [PostgreSQL](https://www.postgresql.org) >= 14 rodando localmente (ou via Docker)
+- [RabbitMQ](https://www.rabbitmq.com) (para eventos de students)
 
 ---
 
@@ -24,12 +25,14 @@ Crie um arquivo `.env` na raiz do projeto com base no exemplo abaixo:
 
 ```env
 DATABASE_URL=postgres://postgres:postgres@localhost:5432/school_control
+RABBITMQ_URL=amqp://guest:guest@localhost:5672
 PORT=3001
 ```
 
 | Variável | Descrição |
 |---|---|
 | `DATABASE_URL` | Connection string do PostgreSQL |
+| `RABBITMQ_URL` | Connection string do RabbitMQ |
 | `PORT` | Porta em que a API vai subir |
 
 ### 3. Criar e migrar o banco de dados
@@ -93,6 +96,39 @@ docker run --name school-db \
 
 ---
 
+## Subindo infraestrutura com Docker Compose
+
+Para subir Postgres + RabbitMQ de uma vez:
+
+```bash
+docker compose up -d rabbitmq postgres
+```
+
+Painel do RabbitMQ: `http://localhost:15672` (user/pass definidos no `docker-compose.yml`).
+
+---
+
+## Eventos de students (RabbitMQ)
+
+Os endpoints de students publicam eventos em exchanges dedicadas:
+
+- `student.created` na `academic.students.created.exchange`
+- `student.updated` na `academic.students.updated.exchange`
+- `student.deleted` na `academic.students.deleted.exchange`
+
+Guia completo de publicacao e testes:
+
+- [docs/students-events.md](docs/students-events.md)
+- [docs/rabbitmq.md](docs/rabbitmq.md)
+- [docs/queue-mapping.md](docs/queue-mapping.md)
+
+---
+
 ## Documentação
 
-- [Arquitetura do projeto](docs/arquitetura.md)
+- [docs/api-standards.md](docs/api-standards.md)
+- [docs/hateoas.md](docs/hateoas.md)
+- [docs/validation.md](docs/validation.md)
+- [docs/swagger.md](docs/swagger.md)
+- [docs/rabbitmq.md](docs/rabbitmq.md)
+- [docs/students-events.md](docs/students-events.md)

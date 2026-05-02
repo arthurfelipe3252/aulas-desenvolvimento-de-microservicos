@@ -6,6 +6,8 @@ import {
   STUDENT_REPOSITORY,
   type StudentRepository,
 } from "@modules/students/domain/repositories/student-repository.interface";
+import { MessagingService } from "@modules/messaging/application/services/messaging.service";
+import { STUDENT_EVENTS } from "@modules/students/infra/messaging/student-events.constants";
 import {
   ConflictException,
   Inject,
@@ -19,7 +21,27 @@ export class StudentService {
   constructor(
     @Inject(STUDENT_REPOSITORY)
     private readonly studentRepository: StudentRepository,
+    private readonly messagingService: MessagingService,
   ) {}
+
+  private async publishEvent(
+    event: { exchange: string; routingKey: string },
+    student: Student,
+  ): Promise<void> {
+    const payload = JSON.stringify({
+      id: student.id,
+      name: student.name,
+      email: student.email,
+      document: student.document,
+      registration: student.registration,
+    });
+
+    await this.messagingService.publish(
+      { content: payload },
+      event.exchange,
+      event.routingKey,
+    );
+  }
 
   async create(dto: CreateStudentDto): Promise<void> {
     const existing = await this.studentRepository.findByEmail(dto.email);
@@ -30,6 +52,9 @@ export class StudentService {
 
     const student = Student.restore(dto);
     await this.studentRepository.create(student!);
+
+    const created = await this.studentRepository.findByEmail(dto.email);
+    await this.publishEvent(STUDENT_EVENTS.CREATED, created!);
   }
 
   async edit(id: string, dto: UpdateStudentDto): Promise<void> {
@@ -52,10 +77,18 @@ export class StudentService {
     if (dto.document) student.withDocument(dto.document);
     if (dto.registration) student.withRegistration(dto.registration);
     await this.studentRepository.update(student);
+    await this.publishEvent(STUDENT_EVENTS.UPDATED, student);
   }
 
   async remove(id: string): Promise<void> {
+    const student = await this.studentRepository.findById(id);
+
+    if (!student) {
+      throw new NotFoundException("Student not found");
+    }
+
     await this.studentRepository.delete(id);
+    await this.publishEvent(STUDENT_EVENTS.DELETED, student);
   }
 
   async list(): Promise<StudentDto[]> {
