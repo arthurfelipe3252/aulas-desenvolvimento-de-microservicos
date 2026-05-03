@@ -14,7 +14,14 @@
       "Bash(node -e ' *)",
       "Bash(MSYS_NO_PATHCONV=1 docker exec school-control-mq *)",
       "Bash(netstat -ano)",
-      "Bash(curl -s -u school:school123 http://localhost:15673/api/exchanges/%2F)"
+      "Bash(curl -s -u school:school123 http://localhost:15673/api/exchanges/%2F)",
+      "Bash(npx tsc *)",
+      "Bash(echo \"---EXIT $?---\")",
+      "Bash(npx @biomejs/biome check src/modules/students src/modules/messaging)",
+      "Bash(curl -s -u school:school123 -X PUT http://localhost:15673/api/queues/%2F/inspect.__TRACKED_VAR__ -H 'Content-Type: application/json' -d '{\"durable\":false,\"auto_delete\":true}')",
+      "Bash(curl -s -u school:school123 -X POST http://localhost:15673/api/bindings/%2F/e/academic.students.__TRACKED_VAR__.exchange/q/inspect.__TRACKED_VAR__ -H 'Content-Type: application/json' -d '{\"routing_key\":\"student.__TRACKED_VAR__\"}')",
+      "Bash(curl -s -u school:school123 \"http://localhost:15673/api/queues/%2F\")",
+      "Bash(curl *)"
     ]
   }
 }

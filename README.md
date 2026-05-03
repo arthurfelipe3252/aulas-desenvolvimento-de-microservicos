@@ -24,16 +24,31 @@ npm install
 Crie um arquivo `.env` na raiz do projeto com base no exemplo abaixo:
 
 ```env
-DATABASE_URL=postgres://postgres:postgres@localhost:5432/school_control
-RABBITMQ_URL=amqp://guest:guest@localhost:5672
-PORT=3001
+# Servidor
+PORT=3000
+
+# Banco de dados
+DB_USER=<seu-usuario>
+DB_PASSWORD=<sua-senha>
+DB_NAME=school_control
+DB_PORT=5433
+DATABASE_URL=postgresql://<seu-usuario>:<sua-senha>@localhost:5433/school_control
+
+# RabbitMQ
+RABBITMQ_PORT=5673
+RABBITMQ_MANAGEMENT_PORT=15673
+RABBITMQ_URL=amqp://<seu-usuario>:<sua-senha>@localhost:5673
 ```
 
 | Variável | Descrição |
 |---|---|
-| `DATABASE_URL` | Connection string do PostgreSQL |
-| `RABBITMQ_URL` | Connection string do RabbitMQ |
 | `PORT` | Porta em que a API vai subir |
+| `DB_USER` / `DB_PASSWORD` / `DB_NAME` / `DB_PORT` | Credenciais consumidas pelo `docker-compose.yml` para subir o Postgres |
+| `DATABASE_URL` | Connection string do PostgreSQL usada pelo Drizzle |
+| `RABBITMQ_PORT` / `RABBITMQ_MANAGEMENT_PORT` | Portas do host onde o RabbitMQ é publicado pelo Compose (default `5672`/`15672`) |
+| `RABBITMQ_URL` | Connection string AMQP usada pela aplicação |
+
+> Por que `5673`/`15673` em vez das portas padrão? Para evitar conflito com outras instâncias de RabbitMQ que possam já estar rodando localmente em outros projetos. Se você não tem essa colisão, pode usar `5672`/`15672` — basta alinhar `RABBITMQ_PORT`, `RABBITMQ_MANAGEMENT_PORT` e a porta dentro de `RABBITMQ_URL`.
 
 ### 3. Criar e migrar o banco de dados
 
@@ -60,7 +75,7 @@ npm run build
 npm run start:prod
 ```
 
-A API ficará disponível em `http://localhost:3001` (ou na porta configurada em `PORT`).
+A API ficará disponível em `http://localhost:3000` (ou na porta configurada em `PORT`). Swagger UI em `/docs`.
 
 ---
 
@@ -104,23 +119,50 @@ Para subir Postgres + RabbitMQ de uma vez:
 docker compose up -d rabbitmq postgres
 ```
 
-Painel do RabbitMQ: `http://localhost:15672` (user/pass definidos no `docker-compose.yml`).
+| Serviço | URL local | Login |
+|---|---|---|
+| Painel RabbitMQ | `http://localhost:${RABBITMQ_MANAGEMENT_PORT}` | `RABBITMQ_USER` / `RABBITMQ_PASSWORD` do `.env` |
+| Broker AMQP | `amqp://localhost:${RABBITMQ_PORT}` | mesmas do painel |
+| Postgres | `localhost:${DB_PORT}` | `DB_USER` / `DB_PASSWORD` do `.env` |
 
 ---
 
 ## Eventos de students (RabbitMQ)
 
-Os endpoints de students publicam eventos em exchanges dedicadas:
+Os endpoints `POST`, `PUT` e `DELETE` de `/v1/students` publicam eventos em exchanges dedicadas:
 
-- `student.created` na `academic.students.created.exchange`
-- `student.updated` na `academic.students.updated.exchange`
-- `student.deleted` na `academic.students.deleted.exchange`
+| Operação | Exchange | Routing key | Payload |
+|---|---|---|---|
+| Criação | `academic.students.created.exchange` | `student.created` | snapshot do student criado |
+| Atualização | `academic.students.updated.exchange` | `student.updated` | snapshot do student atualizado |
+| Remoção | `academic.students.deleted.exchange` | `student.deleted` | snapshot do student antes do delete |
 
-Guia completo de publicacao e testes:
+As 3 exchanges (`direct`, `durable`) são criadas automaticamente no startup pelo `StudentExchangesInitializer`.
 
-- [docs/students-events.md](docs/students-events.md)
-- [docs/rabbitmq.md](docs/rabbitmq.md)
-- [docs/queue-mapping.md](docs/queue-mapping.md)
+### Arquitetura — producer-only
+
+Este microsserviço é **apenas produtor**. A divisão de responsabilidades segue `docs/queue-mapping.md`:
+
+- ✅ Students cria e mantém **suas exchanges**.
+- ❌ Students **não** cria filas nem bindings — isso é responsabilidade de cada microsserviço **consumer** (enrollment, attendance, etc.).
+
+Como nenhum consumer existe ainda, mensagens publicadas em exchanges sem binding são descartadas pelo broker como `unroutable` — comportamento esperado.
+
+### Observando mensagens durante o desenvolvimento
+
+Para ver as mensagens publicadas, crie filas de inspeção temporárias e faça binding nas exchanges:
+
+1. Acesse o painel do RabbitMQ (URL e login conforme tabela acima).
+2. Aba **Queues and Streams** → criar `inspect.created`, `inspect.updated`, `inspect.deleted` (durable).
+3. Aba **Exchanges** → para cada `academic.students.{created,updated,deleted}.exchange`, adicionar binding para a fila correspondente com routing key `student.{created,updated,deleted}`.
+4. Disparar requisições via Swagger (`/docs`).
+5. Voltar nas filas → **Get messages** para ler os payloads.
+
+Documentação detalhada:
+
+- [docs/students-events.md](docs/students-events.md) — guia de implementação e testes
+- [docs/rabbitmq.md](docs/rabbitmq.md) — conceitos e estrutura do módulo
+- [docs/queue-mapping.md](docs/queue-mapping.md) — topologia completa de exchanges/filas dos microsserviços
 
 ---
 
